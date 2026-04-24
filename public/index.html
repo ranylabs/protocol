@@ -867,6 +867,7 @@
           <button class="secondary" id="btnTabCrew" style="display:none;">אנשי צוות</button>
           <button class="secondary" id="btnTabUsers" style="display:none;">משתמשים</button>
           <button class="secondary" id="btnStartEvent">התחל אירוע</button>
+          <button class="secondary" id="btnStartAdHocEvent">התחל אירוע ללא נוהל</button>
           <button class="secondary" id="btnSaveEvent" style="display:none;">שמור אירוע</button>
           <div class="pill" id="itemsPill">0 סעיפים</div>
           <div class="pill" id="todoPill">0 לביצוע</div>
@@ -1189,6 +1190,7 @@
   let eventsData = [];
   let selectedSavedEvent = null;
   let isStartingEvent = false;
+  let pendingEventTemplate = null;
   let procedureTempDone = {};
   let crewMembers = [...DEFAULT_CREW];
   let managedUsers = [];
@@ -1383,11 +1385,13 @@
     });
 
     const btnStartEvent = $("#btnStartEvent");
+    const btnStartAdHocEvent = $("#btnStartAdHocEvent");
     const btnSaveEvent = $("#btnSaveEvent");
     const btnTabStats = $("#btnTabStats");
     const btnTabCrew = $("#btnTabCrew");
     const btnTabUsers = $("#btnTabUsers");
     if(btnStartEvent) btnStartEvent.style.display = canUseEvents() ? "" : "none";
+    if(btnStartAdHocEvent) btnStartAdHocEvent.style.display = canUseEvents() ? "" : "none";
     if(btnSaveEvent) btnSaveEvent.style.display = (canUseEvents() && activeEvent && currentView === "procedures") ? "" : "none";
     if(btnTabStats) btnTabStats.style.display = canUseEvents() ? "" : "none";
     if(btnTabCrew) btnTabCrew.style.display = canEditProcedures() ? "" : "none";
@@ -1546,10 +1550,35 @@
     if(!canUseEvents()) return;
     const p = getActive();
     if(!p) return;
+    pendingEventTemplate = {
+      procedureId: p.id,
+      procedureTitle: p.title || "",
+      items: (p.items || []).map(it => ({
+        text: String(it.text || ""),
+        done: false,
+        addedByOperator: false
+      })),
+      isAdHoc: false
+    };
     isStartingEvent = true;
     setView("procedures");
     $("#eventStartName").value = p.title || "";
     $("#eventStartMeta").textContent = p.title || "-";
+    renderEventStartPanel();
+  }
+
+  function startAdHocEvent(){
+    if(!canUseEvents()) return;
+    pendingEventTemplate = {
+      procedureId: null,
+      procedureTitle: "אירוע ללא נוהל",
+      items: [],
+      isAdHoc: true
+    };
+    isStartingEvent = true;
+    setView("procedures");
+    $("#eventStartName").value = "";
+    $("#eventStartMeta").textContent = "אירוע ללא נוהל";
     renderEventStartPanel();
   }
 
@@ -1573,8 +1602,21 @@
   }
 
   function buildActiveEventFromStartForm(){
-    const p = getActive();
-    if(!p) return;
+    const template = pendingEventTemplate || (function(){
+      const p = getActive();
+      if(!p) return null;
+      return {
+        procedureId: p.id,
+        procedureTitle: p.title || "",
+        items: (p.items || []).map(it => ({
+          text: String(it.text || ""),
+          done: false,
+          addedByOperator: false
+        })),
+        isAdHoc: false
+      };
+    })();
+    if(!template) return;
     const eventName = ($("#eventStartName").value || "").trim();
     if(!eventName){
       $("#eventStartName").focus();
@@ -1583,20 +1625,22 @@
     const selectedCrew = [...document.querySelectorAll(".jsStartCrew:checked")].map(el => String(el.value || "").trim()).filter(Boolean);
     activeEvent = {
       eventId: uid(),
-      procedureId: p.id,
-      procedureTitle: p.title || "",
+      procedureId: template.procedureId,
+      procedureTitle: template.procedureTitle,
       eventName: eventName,
       operatorEmail: String(window.currentUserEmail || "").toLowerCase(),
       shiftCrew: selectedCrew,
       createdAt: new Date().toISOString(),
-      items: (p.items || []).map(it => ({
+      items: template.items.map(it => ({
         text: String(it.text || ""),
-        done: false,
-        addedByOperator: false
+        done: Boolean(it.done),
+        addedByOperator: Boolean(it.addedByOperator)
       })),
       notes: "",
-      summary: ""
+      summary: "",
+      isAdHoc: template.isAdHoc === true
     };
+    pendingEventTemplate = null;
     isStartingEvent = false;
     setView("procedures");
   }
@@ -2440,8 +2484,10 @@ async function loadFromCloud(){
     setView("users");
   });
   $("#btnStartEvent").addEventListener("click", startEventFromActiveProcedure);
+  $("#btnStartAdHocEvent").addEventListener("click", startAdHocEvent);
   $("#btnConfirmStartEvent").addEventListener("click", buildActiveEventFromStartForm);
   $("#btnCancelStartEvent").addEventListener("click", () => {
+    pendingEventTemplate = null;
     isStartingEvent = false;
     setView("procedures");
   });
