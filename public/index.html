@@ -909,8 +909,9 @@
         <textarea id="eventNotes" placeholder="הערות / סיכום אירוע"></textarea>
         <div class="label" style="margin:8px 2px;">סיכום אירוע</div>
         <textarea id="eventSummary" placeholder="סיכום אירוע"></textarea>
-        <div style="display:flex; justify-content:flex-start; margin-top:14px;">
+        <div style="display:flex; justify-content:flex-start; gap:10px; flex-wrap:wrap; margin-top:14px;">
           <button id="btnSaveEvent" style="justify-content:center; min-width:220px; background:var(--btn-success);">שמור וסיים אירוע</button>
+          <button class="secondary danger" id="btnCancelActiveEvent" style="justify-content:center; min-width:220px; background:transparent;">בטל אירוע ללא שמירה</button>
         </div>
       </div>
 
@@ -1747,6 +1748,16 @@
     await reloadEventsData();
   }
 
+  function cancelActiveEvent(){
+    if(!activeEvent) return;
+    if(!confirm("האם לבטל את האירוע ללא שמירה?")) return;
+    activeEvent = null;
+    pendingEventTemplate = null;
+    isStartingEvent = false;
+    clearProcedureTempDone();
+    setView("procedures");
+  }
+
   function openSavedEventReport(ev){
     selectedSavedEvent = ev || null;
     renderSavedEventReport();
@@ -2551,6 +2562,7 @@ async function loadFromCloud(){
     }
   });
   $("#btnSaveEvent").addEventListener("click", saveActiveEvent);
+  $("#btnCancelActiveEvent").addEventListener("click", cancelActiveEvent);
   $("#btnAddEventItem").addEventListener("click", () => {
     if(!activeEvent || !canUseEvents()) return;
     const txt = ($("#newEventItemText").value || "").trim();
