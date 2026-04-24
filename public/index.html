@@ -2836,8 +2836,11 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, doc, setDoc, getDoc, getDocs, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+// API key must not be committed to GitHub. Use environment or local config.
+const FIREBASE_API_KEY = "<REPLACE_WITH_ENV>";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDgKsec94uE9kTUBL8oB7qTksOxmQ2ykxg",
+  apiKey: FIREBASE_API_KEY,
   authDomain: "protocol-85f83.firebaseapp.com",
   projectId: "protocol-85f83",
   storageBucket: "protocol-85f83.firebasestorage.app",
