@@ -816,7 +816,7 @@
         <h1>JRCC HAIFA - מערכת נהלים (לוקאלית)</h1>
       </div>
       <div class="actions">
-        <button class="secondary" id="btnSave" title="שמירה מקומית בדפדפן">💾 שמור</button>
+        <button class="secondary" id="btnSave" title="שמירה מקומית בדפדפן" style="display:none;">💾 שמור</button>
         <button class="secondary" id="btnExport" title="יצוא JSON">📋 יצוא JSON</button>
         <button class="secondary" id="btnImport" title="יבוא JSON">⬇️ יבוא JSON</button>
         <button class="secondary" id="btnPrint" title="הדפסה או שמירה כ-PDF">🖨️ הדפסה</button>
@@ -868,7 +868,6 @@
           <button class="secondary" id="btnTabUsers" style="display:none;">משתמשים</button>
           <button class="secondary" id="btnStartEvent">התחל אירוע</button>
           <button class="secondary" id="btnStartAdHocEvent">התחל אירוע ללא נוהל</button>
-          <button class="secondary" id="btnSaveEvent" style="display:none;">שמור אירוע</button>
           <div class="pill" id="itemsPill">0 סעיפים</div>
           <div class="pill" id="todoPill">0 לביצוע</div>
           <div class="pill" id="donePill">0 בוצע</div>
@@ -900,6 +899,7 @@
           <h3 class="sectionTitle" id="eventEditorTitle">אירוע פעיל</h3>
           <div class="sectionSub" id="eventEditorMeta">-</div>
         </div>
+        <div class="label" style="margin:0 2px 12px;">אירוע פעיל - הסימונים וההערות יישמרו בדוח האירוע</div>
         <div class="composer" style="padding:0; border:none;">
           <button id="btnAddEventItem" style="justify-content:center;">➕ הוסף סעיף לאירוע</button>
           <textarea id="newEventItemText" placeholder="כתוב כאן סעיף תפעולי לאירוע..."></textarea>
@@ -909,6 +909,9 @@
         <textarea id="eventNotes" placeholder="הערות / סיכום אירוע"></textarea>
         <div class="label" style="margin:8px 2px;">סיכום אירוע</div>
         <textarea id="eventSummary" placeholder="סיכום אירוע"></textarea>
+        <div style="display:flex; justify-content:flex-start; margin-top:14px;">
+          <button id="btnSaveEvent" style="justify-content:center; min-width:220px; background:var(--btn-success);">שמור וסיים אירוע</button>
+        </div>
       </div>
 
       <div class="content" id="eventStartPanel" style="display:none;">
@@ -1269,7 +1272,7 @@
     }
     el.style.display = "";
     if(activeEvent){
-      el.textContent = "אירוע פעיל - הסימונים נשמרים בדוח האירוע";
+      el.textContent = "אירוע פעיל - הסימונים וההערות יישמרו בדוח האירוע";
     }else{
       el.textContent = "מצב עיון בנוהל - הסימונים זמניים ואינם נשמרים";
     }
@@ -1366,7 +1369,7 @@
     if(btnDupProc) btnDupProc.style.display = editable ? "" : "none";
     if(btnDelProc) btnDelProc.style.display = editable ? "" : "none";
     if(btnSeedCloud) btnSeedCloud.style.display = editable ? "" : "none";
-    if(btnSave) btnSave.style.display = isTeam ? "none" : "";
+    if(btnSave) btnSave.style.display = "none";
     if(btnExport) btnExport.style.display = isTeam ? "none" : "";
     if(btnImport) btnImport.style.display = isTeam ? "none" : "";
     if(titleInput) titleInput.disabled = !editable;
@@ -1736,9 +1739,11 @@
     activeEvent.summary = $("#eventSummary").value || "";
     reorderEventItems();
     await window.saveEventToCloud(activeEvent);
-    alert("אירוע נשמר");
+    alert("האירוע נשמר ונסגר");
     activeEvent = null;
-    setView("events");
+    pendingEventTemplate = null;
+    isStartingEvent = false;
+    setView("procedures");
     await reloadEventsData();
   }
 
