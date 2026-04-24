@@ -866,14 +866,21 @@
           <button class="secondary" id="btnTabStats">סטטיסטיקה</button>
           <button class="secondary" id="btnTabCrew" style="display:none;">אנשי צוות</button>
           <button class="secondary" id="btnTabUsers" style="display:none;">משתמשים</button>
-          <button class="secondary" id="btnStartEvent">התחל אירוע</button>
-          <button class="secondary" id="btnStartAdHocEvent">התחל אירוע ללא נוהל</button>
           <div class="pill" id="itemsPill">0 סעיפים</div>
           <div class="pill" id="todoPill">0 לביצוע</div>
           <div class="pill" id="donePill">0 בוצע</div>
         </div>
       </div>
       <div class="label" id="modeStatusMsg" style="padding:8px 14px 0;"></div>
+      <div class="content" id="eventLaunchPanel">
+        <div class="sectionHeader">
+          <h3 class="sectionTitle">פתיחת אירוע</h3>
+        </div>
+        <div class="miniBar" style="justify-content:flex-start;">
+          <button id="btnStartEvent" style="justify-content:center; min-width:220px; background:var(--btn-primary);">התחל אירוע לפי נוהל זה</button>
+          <button class="secondary" id="btnStartAdHocEvent" style="justify-content:center; min-width:220px;">התחל אירוע ללא נוהל</button>
+        </div>
+      </div>
 
       <div class="composer" id="proceduresComposer">
         <button id="btnAddItem" style="justify-content:center;">➕ הוסף סעיף</button>
@@ -1509,9 +1516,11 @@
     const showUsersManage = viewName === "users";
     const showEventEditor = showProcedures && !!activeEvent;
     const showEventStart = showProcedures && isStartingEvent && !activeEvent;
+    const showEventLaunch = showProcedures && !showEventEditor && !showEventStart;
 
     $("#proceduresComposer").style.display = showProcedures && !showEventEditor && !showEventStart ? "" : "none";
     $("#proceduresContent").style.display = showProcedures && !showEventEditor && !showEventStart ? "" : "none";
+    $("#eventLaunchPanel").style.display = showEventLaunch ? "" : "none";
     $("#eventEditor").style.display = showEventEditor ? "" : "none";
     $("#eventStartPanel").style.display = showEventStart ? "" : "none";
     $("#savedEventsView").style.display = showSavedEvents ? "" : "none";
@@ -1688,14 +1697,12 @@
         <div class="itemActions">
           <button class="iconBtn ok jsEvEdit" ${item.addedByOperator ? "" : "style=\"display:none;\""}>✏️ ערוך</button>
           <button class="iconBtn ok jsEvSave" style="display:none;">✅ שמור</button>
-          <button class="iconBtn jsEvCancel" style="display:none;">↩️ ביטול</button>
           <button class="iconBtn danger jsEvDelete" ${item.addedByOperator ? "" : "style=\"display:none;\""}>🗑️ מחק</button>
         </div>
       `;
       const doneCb = li.querySelector(".jsEvDone");
       const btnEdit = li.querySelector(".jsEvEdit");
       const btnSave = li.querySelector(".jsEvSave");
-      const btnCancel = li.querySelector(".jsEvCancel");
       const btnDelete = li.querySelector(".jsEvDelete");
       const textEl = li.querySelector(".text");
       const editArea = li.querySelector(".editArea");
@@ -1710,15 +1717,6 @@
         editArea.style.display = "block";
         btnEdit.style.display = "none";
         btnSave.style.display = "";
-        btnCancel.style.display = "";
-      });
-      btnCancel?.addEventListener("click", () => {
-        editArea.value = item.text || "";
-        textEl.style.display = "";
-        editArea.style.display = "none";
-        btnEdit.style.display = "";
-        btnSave.style.display = "none";
-        btnCancel.style.display = "none";
       });
       btnSave?.addEventListener("click", () => {
         item.text = (editArea.value || "").trim();
@@ -2315,7 +2313,6 @@ async function loadFromCloud(){
         <div class="itemActions">
           <button class="iconBtn ok jsEdit">✏️ ערוך</button>
           <button class="iconBtn ok jsSave" style="display:none;">✅ שמור</button>
-          <button class="iconBtn jsCancel" style="display:none;">↩️ ביטול</button>
           <button class="iconBtn danger jsDelete">🗑️ מחק</button>
         </div>
       `;
@@ -2323,7 +2320,6 @@ async function loadFromCloud(){
       const doneCb = li.querySelector(".jsDone");
       const btnEdit = li.querySelector(".jsEdit");
       const btnSave = li.querySelector(".jsSave");
-      const btnCancel = li.querySelector(".jsCancel");
       const btnDelete = li.querySelector(".jsDelete");
       const editArea = li.querySelector(".editArea");
 
@@ -2339,18 +2335,8 @@ async function loadFromCloud(){
         li.classList.add("editing");
         btnEdit.style.display = "none";
         btnSave.style.display = "";
-        btnCancel.style.display = "";
         editArea.focus();
         editArea.setSelectionRange(editArea.value.length, editArea.value.length);
-      });
-
-      btnCancel.addEventListener("click", () => {
-        if(!canEditProcedures()) return;
-        li.classList.remove("editing");
-        btnEdit.style.display = "";
-        btnSave.style.display = "none";
-        btnCancel.style.display = "none";
-        editArea.value = item.text || "";
       });
 
       btnSave.addEventListener("click", () => {
@@ -2363,7 +2349,6 @@ async function loadFromCloud(){
         li.classList.remove("editing");
         btnEdit.style.display = "";
         btnSave.style.display = "none";
-        btnCancel.style.display = "none";
         saveState(false);
         render();
       });
