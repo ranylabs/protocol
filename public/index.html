@@ -1,0 +1,2844 @@
+﻿<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JRCC HAIFA - נהלים</title>
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:rgba(255,255,255,0.06);
+      --panel2:rgba(255,255,255,0.10);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,0.70);
+      --accent:#66e3ff;
+      --accent2:#a78bfa;
+      --danger:#ff6b6b;
+      --ok:#4ade80;
+      --warn:#fbbf24;
+      --border:rgba(255,255,255,0.16);
+      --shadow: 0 18px 55px rgba(0,0,0,0.45);
+      --radius:18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: "Heebo","Rubik","Assistant","Noto Sans Hebrew",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(102,227,255,0.18), transparent 55%),
+        radial-gradient(900px 600px at 85% 20%, rgba(167,139,250,0.16), transparent 60%),
+        radial-gradient(800px 600px at 50% 90%, rgba(74,222,128,0.10), transparent 60%),
+        linear-gradient(180deg, #070b14 0%, #0b1220 45%, #070b14 100%);
+      min-height:100vh;
+    }
+
+    .app{
+      max-width:1240px;
+      margin:0 auto;
+      padding:18px;
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:14px;
+    }
+
+    header{
+      grid-column: 1 / -1;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      padding:6px 0 2px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      user-select:none;
+    }
+    .dot{
+      width:14px;height:14px;border-radius:50%;
+      background:conic-gradient(from 140deg, var(--accent), var(--accent2), var(--accent));
+      box-shadow: 0 0 0 4px rgba(102,227,255,0.12);
+    }
+    .brand h1{
+      margin:0;
+      font-size:15px;
+      font-weight:800;
+      color:rgba(234,240,255,0.92);
+      letter-spacing:0.2px;
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    button{
+      appearance:none;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      transition:transform .05s ease, border-color .2s ease, background .2s ease;
+      font-weight:750;
+      font-size:13px;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      font-family:var(--sans);
+    }
+    button:active{ transform: translateY(1px) }
+    button:hover{ border-color: rgba(102,227,255,0.45) }
+    button.secondary{
+      background: transparent;
+      box-shadow:none;
+    }
+    button.danger{
+      border-color: rgba(255,107,107,0.35);
+    }
+    button.danger:hover{
+      border-color: rgba(255,107,107,0.75);
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      min-height: 520px;
+    }
+
+    /* Left panel */
+    .leftHead{
+      padding:14px 14px 10px;
+      border-bottom:1px solid rgba(255,255,255,0.10);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .leftTitle{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .leftTitle h2{
+      margin:0;
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:0.2px;
+    }
+    .sub{
+      font-size:12px;
+      color:var(--muted);
+      font-family:var(--mono);
+    }
+
+    .pill{
+      font-family: var(--mono);
+      font-size:12px;
+      border:1px solid rgba(255,255,255,0.14);
+      color: rgba(234,240,255,0.84);
+      background: rgba(0,0,0,0.18);
+      padding:8px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    .procToolbar{
+      padding:12px 14px 12px;
+      border-bottom:1px solid rgba(255,255,255,0.10);
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .input{
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.18);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      outline:none;
+      font-size:13px;
+      font-family: var(--sans);
+      width:100%;
+    }
+    .input:focus{
+      border-color: rgba(167,139,250,0.55);
+      box-shadow: 0 0 0 4px rgba(167,139,250,0.10);
+    }
+
+    .procList{
+      list-style:none;
+      margin:0;
+      padding:10px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .procItem{
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.14);
+      border-radius: 16px;
+      padding:10px;
+      display:grid;
+      grid-template-columns: 44px 1fr;
+      gap:10px;
+      align-items:center;
+      cursor:pointer;
+      user-select:none;
+    }
+    .procItem:hover{
+      border-color: rgba(102,227,255,0.35);
+    }
+    .procItem.active{
+      border-color: rgba(102,227,255,0.70);
+      background: linear-gradient(180deg, rgba(102,227,255,0.12), rgba(0,0,0,0.10));
+      box-shadow: 0 18px 60px rgba(102,227,255,0.08);
+    }
+    .handle{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:grab;
+    }
+    .handle:active{ cursor:grabbing }
+    .grip{
+      width:16px;height:16px;
+      background:
+        radial-gradient(circle at 3px 3px, rgba(234,240,255,0.75) 2px, transparent 3px),
+        radial-gradient(circle at 3px 11px, rgba(234,240,255,0.75) 2px, transparent 3px),
+        radial-gradient(circle at 11px 3px, rgba(234,240,255,0.75) 2px, transparent 3px),
+        radial-gradient(circle at 11px 11px, rgba(234,240,255,0.75) 2px, transparent 3px);
+      opacity:0.75;
+    }
+    .procName{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+    }
+    .procName span{
+      font-weight:850;
+      font-size:13px;
+      line-height:1.3;
+    }
+    .procMeta{
+      font-size:12px;
+      color:rgba(234,240,255,0.68);
+      margin-top:3px;
+    }
+
+    /* Right panel */
+    .rightHead{
+      padding:14px 14px 10px;
+      border-bottom:1px solid rgba(255,255,255,0.10);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .rightTitleWrap{
+      flex:1;
+      min-width:260px;
+    }
+    .label{
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+    .titleInput{
+      width:100%;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.18);
+      color: var(--text);
+      padding:12px 14px;
+      border-radius: 16px;
+      font-size:18px;
+      font-weight:900;
+      outline:none;
+      letter-spacing:0.2px;
+      font-family:var(--sans);
+    }
+    .titleInput:focus{
+      border-color: rgba(102,227,255,0.55);
+      box-shadow: 0 0 0 4px rgba(102,227,255,0.12);
+    }
+
+    .miniBar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .content{
+      padding:12px 10px 16px;
+    }
+
+    .composer{
+      padding:12px 14px 14px;
+      border-bottom:1px solid rgba(255,255,255,0.10);
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    textarea{
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.18);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      outline:none;
+      font-size:13px;
+      font-family: var(--sans);
+      width:100%;
+      min-height:70px;
+      resize:vertical;
+      line-height:1.5;
+    }
+    textarea:focus{
+      border-color: rgba(167,139,250,0.55);
+      box-shadow: 0 0 0 4px rgba(167,139,250,0.10);
+    }
+
+    .sectionHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:6px 10px 10px;
+      margin:0 8px 2px;
+    }
+    .sectionTitle{
+      margin:0;
+      font-size:13px;
+      font-weight:900;
+      color: rgba(234,240,255,0.88);
+      letter-spacing:0.2px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .sectionSub{
+      font-size:12px;
+      color: rgba(234,240,255,0.66);
+      font-family: var(--mono);
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.14);
+      padding:6px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    .list{
+      list-style:none;
+      margin:0;
+      padding:0 8px 12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .item{
+      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.05));
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius: 16px;
+      padding:12px;
+      display:grid;
+      grid-template-columns: 44px 1fr auto;
+      gap:12px;
+      align-items:start;
+    }
+    .item.dragging{
+      opacity:0.75;
+      border-color: rgba(102,227,255,0.70);
+      box-shadow: 0 18px 60px rgba(102,227,255,0.10);
+    }
+
+    .meta{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:8px;
+    }
+    .badge{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.16);
+      color: rgba(234,240,255,0.86);
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      user-select:none;
+    }
+
+    .text{
+      font-size:15px;
+      line-height:1.72;
+      color: rgba(234,240,255,0.93);
+      margin:0;
+      white-space:pre-wrap;
+      word-break:break-word;
+      letter-spacing:0.15px;
+    }
+    .editArea{
+      width:100%;
+      min-height:86px;
+      display:none;
+    }
+    .item.editing .text{ display:none }
+    .item.editing .editArea{ display:block }
+
+    .itemActions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-start;
+      padding-top:2px;
+    }
+    .iconBtn{
+      padding:9px 10px;
+      border-radius:12px;
+      font-size:12px;
+      font-weight:850;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.16);
+      box-shadow:none;
+      font-family: var(--sans);
+    }
+    .iconBtn:hover{
+      border-color: rgba(102,227,255,0.45);
+    }
+    .iconBtn.danger:hover{
+      border-color: rgba(255,107,107,0.75);
+    }
+    .iconBtn.ok:hover{
+      border-color: rgba(74,222,128,0.65);
+    }
+
+    .savedEventsTable{
+      width:100%;
+      border-collapse:collapse;
+      table-layout:fixed;
+    }
+    .savedEventsTable th,
+    .savedEventsTable td{
+      padding:8px;
+      text-align:right;
+      vertical-align:top;
+      white-space:normal;
+      word-break:normal;
+      overflow-wrap:break-word;
+      line-height:1.5;
+    }
+    .savedEventsTable td:last-child,
+    .savedEventsTable th:last-child{
+      width:92px;
+    }
+
+    .savedEventHeader{
+      margin-bottom:10px;
+      padding:10px 12px;
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:14px;
+      background:rgba(0,0,0,0.14);
+    }
+    .savedEventTitle{
+      margin:0 0 6px;
+      font-size:16px;
+      font-weight:900;
+      line-height:1.35;
+      color:rgba(234,240,255,0.95);
+    }
+    .savedEventMeta{
+      margin:0;
+      font-size:12px;
+      line-height:1.6;
+      color:rgba(234,240,255,0.72);
+      white-space:normal;
+      word-break:normal;
+      overflow-wrap:anywhere;
+    }
+    .savedEventChecklist{
+      list-style:none;
+      margin:8px 0 10px;
+      padding:0;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .savedEventChecklist li{
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:12px;
+      background:rgba(255,255,255,0.04);
+      padding:10px 12px;
+      white-space:normal;
+      word-break:normal;
+      overflow-wrap:break-word;
+      line-height:1.68;
+    }
+    .savedEventBlock{
+      margin:0 0 10px;
+      white-space:pre-wrap;
+      word-break:normal;
+      overflow-wrap:break-word;
+      line-height:1.72;
+      max-width:100%;
+    }
+    .tabFilterRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin:0 0 10px;
+    }
+    .tabFilterRow .input{
+      max-width:190px;
+    }
+    .tabFilterRow select.input{
+      color: rgba(234,240,255,0.96);
+      font-weight:800;
+      background: rgba(0,0,0,0.26);
+      border-color: rgba(255,255,255,0.20);
+    }
+    .tabFilterRow select.input:focus{
+      border-color: rgba(102,227,255,0.55);
+      box-shadow: 0 0 0 4px rgba(102,227,255,0.10);
+    }
+    .tabFilterRow select.input option{
+      color:#eaf0ff;
+      background:#121a2a;
+    }
+    .statsPanel{
+      margin:0 0 10px;
+      padding:10px 12px;
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:14px;
+      background:rgba(0,0,0,0.14);
+    }
+    .statsHead{
+      margin:0 0 6px;
+      font-size:15px;
+      font-weight:900;
+      color:rgba(234,240,255,0.94);
+    }
+    .statsMeta{
+      margin:0;
+      font-size:12px;
+      line-height:1.6;
+      color:rgba(234,240,255,0.72);
+    }
+    .statsListClean{
+      list-style:none;
+      margin:8px 0 0;
+      padding:0;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .statsListClean li{
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:12px;
+      background:rgba(255,255,255,0.04);
+      padding:10px 12px;
+      white-space:normal;
+      word-break:normal;
+      overflow-wrap:break-word;
+      line-height:1.65;
+    }
+
+    .doneToggle{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      margin-inline-start:2px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.14);
+      user-select:none;
+      cursor:pointer;
+    }
+    .doneToggle input{
+      width:21px;height:21px;
+      accent-color: var(--ok);
+      cursor:pointer;
+    }
+    .doneToggle span{
+      font-size:13px;
+      font-weight:900;
+      color: rgba(234,240,255,0.88);
+    }
+
+    .footer{
+      padding:12px 14px 14px;
+      border-top:1px solid rgba(255,255,255,0.10);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      color: rgba(234,240,255,0.66);
+      font-size:12px;
+    }
+    .kbd{
+      font-family: var(--mono);
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.16);
+      padding:2px 7px;
+      border-radius:8px;
+      margin-inline:4px;
+    }
+
+    @media (max-width: 980px){
+      .app{ grid-template-columns: 1fr; }
+    }
+
+    /* Print styles */
+    @page { margin: 12mm; }
+    @media print {
+      body{
+        background:#ffffff !important;
+        color:#111827 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-family: "Heebo","Rubik","Assistant","Noto Sans Hebrew",system-ui,-apple-system,Segoe UI,Roboto,Arial !important;
+      }
+      header{ display:none !important; }
+      .app{
+        display:block !important;
+        padding:0 !important;
+        max-width:none !important;
+        margin:0 !important;
+      }
+      .left, .procToolbar{ display:none !important; }
+      .right{ margin:0 !important; }
+      .card{
+        box-shadow:none !important;
+        border:1px solid #d1d5db !important;
+        background:#ffffff !important;
+      }
+      .rightHead{
+        border-bottom:1px solid #e5e7eb !important;
+      }
+      .label, .miniBar, .composer, .footer, .handle, .itemActions, textarea, button, input:not(.titleInput){
+        display:none !important;
+      }
+      .titleInput{
+        border:none !important;
+        background:transparent !important;
+        color:#111827 !important;
+        padding:0 !important;
+        font-size:20px !important;
+        font-weight:900 !important;
+      }
+      .sectionHeader{
+        border-bottom:1px solid #e5e7eb !important;
+        margin:0 0 6px !important;
+      }
+      .sectionTitle{
+        color:#111827 !important;
+        font-size:13px !important;
+        font-weight:900 !important;
+      }
+      .sectionSub{
+        color:#111827 !important;
+        border:1px solid #e5e7eb !important;
+        background:#f9fafb !important;
+      }
+      .list{
+        columns: 2;
+        column-gap: 10mm;
+        gap:6px !important;
+        padding:0 !important;
+        margin:0 0 10px !important;
+      }
+      .item{
+        break-inside: avoid;
+        page-break-inside: avoid;
+        border:1px solid #e5e7eb !important;
+        background:#ffffff !important;
+        border-radius:12px !important;
+        padding:8px 10px !important;
+        display:block !important;
+        margin:0 0 6px !important;
+      }
+      .badge{
+        border:1px solid #e5e7eb !important;
+        background:#f9fafb !important;
+        color:#111827 !important;
+        font-size:11px !important;
+        padding:4px 8px !important;
+      }
+      .doneToggle{ display:none !important; }
+      .text{
+        color:#111827 !important;
+        font-size:12px !important;
+        line-height:1.45 !important;
+        margin:0 !important;
+      }
+      @media (max-width: 700px){
+        .list{ columns:1; }
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="authGate" style="position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.65); z-index:99999;">
+  <div style="max-width:520px; width:92%; padding:18px; border-radius:18px; border:1px solid rgba(255,255,255,0.18); background:rgba(10,15,25,0.92); color:#eaf0ff; box-shadow:0 18px 55px rgba(0,0,0,0.55); font-family:inherit;">
+    <div id="authGateTitle" style="font-weight:900; font-size:18px; margin-bottom:6px;">התחברות נדרשת</div>
+    <div id="authGateSubtitle" style="opacity:0.8; font-size:13px; margin-bottom:14px;">כניסה עם חשבון Google של JRCC</div>
+    <button id="btnLogin" style="width:100%; padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.10); color:#eaf0ff; font-weight:900; cursor:pointer;">התחבר עם Google</button>
+  </div>
+</div>
+
+<button id="btnLogout" style="position:fixed; top:12px; left:12px; z-index:99998; padding:10px 12px; border-radius:14px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.08); color:#eaf0ff; font-weight:900; cursor:pointer; display:none;">
+  התנתק
+</button>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <div class="dot" aria-hidden="true"></div>
+        <h1>JRCC HAIFA - מערכת נהלים (לוקאלית)</h1>
+      </div>
+      <div class="actions">
+        <button class="secondary" id="btnSave" title="שמירה מקומית בדפדפן">💾 שמור</button>
+        <button class="secondary" id="btnExport" title="יצוא JSON">📋 יצוא JSON</button>
+        <button class="secondary" id="btnImport" title="יבוא JSON">⬇️ יבוא JSON</button>
+        <button class="secondary" id="btnPrint" title="הדפסה או שמירה כ-PDF">🖨️ הדפסה</button>
+        <button class="secondary" id="btnSeedCloud" style="display:none;" title="Admin only">Seed to Cloud</button>
+        <div class="pill" id="userRolePill">לא מחובר</div>
+      </div>
+    </header>
+
+    <!-- Left -->
+    <section class="card left">
+      <div class="leftHead">
+        <div class="leftTitle">
+          <h2>נהלים</h2>
+          <div class="sub" id="procCount">0</div>
+        </div>
+        <div class="pill" id="activePill">-</div>
+      </div>
+
+      <div class="procToolbar">
+        <input id="procSearch" class="input" placeholder="חיפוש נוהל..." />
+        <button id="btnNewProc" style="width:100%; justify-content:center;">➕ נוהל חדש</button>
+        <button id="btnDupProc" class="secondary" style="width:100%; justify-content:center;">🧬 שכפל נוהל</button>
+        <button id="btnDelProc" class="danger" style="width:100%; justify-content:center;">🗑️ מחק נוהל</button>
+      </div>
+
+      <ol class="procList" id="proceduresList"></ol>
+
+      <div class="footer">
+        <div>טיפ: גרירה על הידית משנה סדר נהלים</div>
+        <div><span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> מוסיף סעיף</div>
+      </div>
+    </section>
+
+    <!-- Right -->
+    <section class="card right">
+      <div class="rightHead">
+        <div class="rightTitleWrap" id="proceduresTopHeader">
+          <div class="label">כותרת הנוהל (ניתן לערוך)</div>
+          <input id="procedureTitle" class="titleInput" value="" />
+          <div class="label" style="margin-top:8px;">שם אירוע / הערות (אופציונלי, נשמר בנוהל)</div>
+          <input id="procedureNote" class="input" value="" placeholder="לדוגמה: אירוע תרגיל מרץ 2026 - אסדת תמר" />
+        </div>
+
+        <div class="miniBar">
+          <button class="secondary" id="btnTabProcedures">נהלים</button>
+          <button class="secondary" id="btnTabEvents">אירועים שמורים</button>
+          <button class="secondary" id="btnTabStats">סטטיסטיקה</button>
+          <button class="secondary" id="btnTabCrew" style="display:none;">אנשי צוות</button>
+          <button class="secondary" id="btnTabUsers" style="display:none;">משתמשים</button>
+          <button class="secondary" id="btnStartEvent">התחל אירוע</button>
+          <button class="secondary" id="btnSaveEvent" style="display:none;">שמור אירוע</button>
+          <div class="pill" id="itemsPill">0 סעיפים</div>
+          <div class="pill" id="todoPill">0 לביצוע</div>
+          <div class="pill" id="donePill">0 בוצע</div>
+        </div>
+      </div>
+      <div class="label" id="modeStatusMsg" style="padding:8px 14px 0;"></div>
+
+      <div class="composer" id="proceduresComposer">
+        <button id="btnAddItem" style="justify-content:center;">➕ הוסף סעיף</button>
+        <textarea id="newItemText" placeholder="כתוב כאן את הסעיף..."></textarea>
+      </div>
+
+      <div class="content" id="proceduresContent">
+        <div class="sectionHeader">
+          <h3 class="sectionTitle">🧭 לביצוע</h3>
+          <div class="sectionSub" id="todoCount">0</div>
+        </div>
+        <ol class="list" id="todoList"></ol>
+
+        <div class="sectionHeader" style="margin-top:10px;">
+          <h3 class="sectionTitle">✅ בוצע</h3>
+          <div class="sectionSub" id="doneCount">0</div>
+        </div>
+        <ol class="list" id="doneList"></ol>
+      </div>
+
+      <div class="content" id="eventEditor" style="display:none;">
+        <div class="sectionHeader">
+          <h3 class="sectionTitle" id="eventEditorTitle">אירוע פעיל</h3>
+          <div class="sectionSub" id="eventEditorMeta">-</div>
+        </div>
+        <div class="composer" style="padding:0; border:none;">
+          <button id="btnAddEventItem" style="justify-content:center;">➕ הוסף סעיף לאירוע</button>
+          <textarea id="newEventItemText" placeholder="כתוב כאן סעיף תפעולי לאירוע..."></textarea>
+        </div>
+        <ol class="list" id="eventItemsList"></ol>
+        <div class="label" style="margin:8px 2px;">הערות / סיכום אירוע</div>
+        <textarea id="eventNotes" placeholder="הערות / סיכום אירוע"></textarea>
+        <div class="label" style="margin:8px 2px;">סיכום אירוע</div>
+        <textarea id="eventSummary" placeholder="סיכום אירוע"></textarea>
+      </div>
+
+      <div class="content" id="eventStartPanel" style="display:none;">
+        <div class="sectionHeader">
+          <h3 class="sectionTitle">התחל אירוע</h3>
+          <div class="sectionSub" id="eventStartMeta">-</div>
+        </div>
+        <div class="label">שם אירוע</div>
+        <input id="eventStartName" class="input" value="" />
+        <div class="label" style="margin-top:8px;">אנשי צוות במשמרת</div>
+        <div id="startCrewList" style="display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 10px;"></div>
+        <div class="miniBar">
+          <button id="btnConfirmStartEvent">התחל אירוע</button>
+          <button class="secondary" id="btnCancelStartEvent">ביטול</button>
+        </div>
+      </div>
+
+      <div class="content" id="savedEventsView" style="display:none;">
+        <div class="sectionHeader">
+          <h3 class="sectionTitle">אירועים שמורים</h3>
+          <div class="sectionSub" id="savedEventsCount">0</div>
+        </div>
+        <div class="tabFilterRow">
+          <select id="savedEventsMonth" class="input">
+            <option value="1">ינואר</option>
+            <option value="2">פברואר</option>
+            <option value="3">מרץ</option>
+            <option value="4">אפריל</option>
+            <option value="5">מאי</option>
+            <option value="6">יוני</option>
+            <option value="7">יולי</option>
+            <option value="8">אוגוסט</option>
+            <option value="9">ספטמבר</option>
+            <option value="10">אוקטובר</option>
+            <option value="11">נובמבר</option>
+            <option value="12">דצמבר</option>
+          </select>
+          <select id="savedEventsYear" class="input"></select>
+        </div>
+        <div id="savedEventsTableWrap"></div>
+        <div id="savedEventReportWrap" style="display:none; margin-top:12px;">
+          <div class="sectionHeader">
+            <h3 class="sectionTitle">דוח אירוע</h3>
+            <button class="secondary" id="btnExportEventReport">ייצוא דוח אירוע</button>
+          </div>
+          <div id="savedEventReportBody"></div>
+        </div>
+      </div>
+
+      <div class="content" id="statsView" style="display:none;">
+        <div class="sectionHeader">
+          <h3 class="sectionTitle">סטטיסטיקה</h3>
+          <button class="secondary" id="btnPrintReport">הדפס דוח סטטיסטי</button>
+        </div>
+        <div class="tabFilterRow">
+          <select id="statsMonth" class="input">
+            <option value="all">כל השנה</option>
+            <option value="1">ינואר</option>
+            <option value="2">פברואר</option>
+            <option value="3">מרץ</option>
+            <option value="4">אפריל</option>
+            <option value="5">מאי</option>
+            <option value="6">יוני</option>
+            <option value="7">יולי</option>
+            <option value="8">אוגוסט</option>
+            <option value="9">ספטמבר</option>
+            <option value="10">אוקטובר</option>
+            <option value="11">נובמבר</option>
+            <option value="12">דצמבר</option>
+          </select>
+          <select id="statsYear" class="input"></select>
+        </div>
+        <div class="statsPanel">
+          <h4 class="statsHead">סיכום אירועים לפי נוהל</h4>
+          <p class="statsMeta" id="statsMeta">-</p>
+          <ol class="statsListClean" id="statsList"></ol>
+        </div>
+      </div>
+
+      <div class="content" id="crewManageView" style="display:none;">
+        <div id="crewAdminSection" style="display:none;">
+          <div class="sectionHeader">
+            <h3 class="sectionTitle">ניהול אנשי צוות</h3>
+          </div>
+          <div class="tabFilterRow">
+            <input id="crewNameInput" class="input" placeholder="שם איש צוות" />
+            <button id="btnAddCrewMember">הוסף</button>
+          </div>
+          <div id="crewMembersAdminList"></div>
+        </div>
+      </div>
+
+      <div class="content" id="usersManageView" style="display:none;">
+        <div id="usersAdminSection" style="display:none;">
+          <div class="sectionHeader">
+            <h3 class="sectionTitle">ניהול משתמשים</h3>
+          </div>
+          <div class="tabFilterRow">
+            <input id="userEmailInput" class="input" placeholder="אימייל משתמש" />
+            <select id="userRoleSelect" class="input">
+              <option value="team">team</option>
+              <option value="admin">admin</option>
+            </select>
+            <button id="btnAddManagedUser">הוסף משתמש</button>
+          </div>
+          <div id="usersAdminList"></div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div>שמירה לוקאלית בדפדפן. יצוא JSON מומלץ לגיבוי והעברה.</div>
+        <div>טיפ: גרירה על הידית משנה סדר סעיפים</div>
+      </div>
+    </section>
+  </div>
+
+<script>
+  const $ = (sel) => document.querySelector(sel);
+
+  const STORAGE_KEY = "jrcc_procedures_app_v1";
+  const MONTH_NAMES_HE = ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
+  const DEFAULT_CREW = ["רן","יוסי","דניאל","מיכאל"];
+
+  function uid(){
+    return Math.random().toString(16).slice(2) + "-" + Date.now().toString(16);
+  }
+
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function nowLocal(){
+    const d = new Date();
+    const pad = (n) => String(n).padStart(2,"0");
+    return `${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  // ---------- Default data extracted from your PDF (as a practical starting point) ----------
+  const DEFAULT_APP = {
+    activeId: null,
+    procedures: [
+      {
+        id: uid(),
+        title: "MEDICO - פנייה רפואית מכלי שיט",
+        note: "",
+        items: [
+          {id: uid(), done:false, text:"קבלת פנייה מערוץ מתאים (VHF/GMDSS/טלפון ימי/דוא\"ל) ותיעוד פרטים ראשוניים בטופס MEDICO."},
+          {id: uid(), done:false, text:"הפנייה לרופא התורן (ד\"ר איב ביטון). אם אינו זמין - הפנייה לרופא חלופי לפי הנהלים."},
+          {id: uid(), done:false, text:"העברת טופס MEDICO מלא לרופא ותיעוד ההמלצות שנמסרו (טיפול המשך / צורך בפינוי)."},
+          {id: uid(), done:false, text:"אם נדרש פינוי - תיאום מבצעי מול הגורמים (חיל האוויר / חיל הים / 669 לפי זמינות) ותיעוד מלא."},
+          {id: uid(), done:false, text:"סיכום האירוע: תיעוד התקשורת, החלטות, והעברת מידע למשמרת הבאה במידת הצורך."}
+        ]
+      },
+      {
+        id: uid(),
+        title: "DSC - קבלת קריאת מצוקה",
+        note: "",
+        items: [
+          {id: uid(), done:false, text:"זיהוי פרטי הקריאה: מיקום, זמן, MMSI, סוג הקריאה."},
+          {id: uid(), done:false, text:"הזנת נקודה ל-OpenCPN כ-Waypoint (כולל שעה) ובדיקת האם בתוך גזרת SAR."},
+          {id: uid(), done:false, text:"ניסיון קשר ב-VHF 16 ובערוצים נוספים לפי צורך. בדיקת מיקום/תנועה באמצעי תצפית זמינים."},
+          {id: uid(), done:false, text:"פתיחת תיק אירוע ותיעוד מלא של כל הפעולות והזמנים."},
+          {id: uid(), done:false, text:"הפעלת גורמי סיוע רלוונטיים (שיטור ימי, חיל הים, 669, רס\"פן) לפי תמונת מצב."}
+        ]
+      },
+      {
+        id: uid(),
+        title: "GMDSS - MAYDAY / PAN PAN / SECURITE",
+        note: "",
+        items: [
+          {id: uid(), done:false, text:"החלטה על סוג שידור: MAYDAY / PAN PAN / SECURITE בהתאם לרמת הסיכון."},
+          {id: uid(), done:false, text:"שידור לפי הפורמט והערוצים המתאימים (VHF 16 / MF 2182 / NAVTEX לפי צורך)."},
+          {id: uid(), done:false, text:"הפצת המידע לגורמים רלוונטיים ותיעוד מלא ביומן ובתיק האירוע."},
+          {id: uid(), done:false, text:"עדכונים שוטפים לפי שינוי מצב, כולל ביטול/הפחתת אזהרה בעת הצורך."}
+        ]
+      },
+      {
+        id: uid(),
+        title: "COSPAS-SARSAT - אות מצוקה לווייני",
+        note: "",
+        items: [
+          {id: uid(), done:false, text:"סיווג המשואה: ELT / EPIRB / PLB וזיהוי HEX ID / פרטי רישום."},
+          {id: uid(), done:false, text:"בדיקת מיקום גאוגרפי, זמן, ורמת ודאות. הצלבה מול נתיבי טיסה/ים לפי סוג."},
+          {id: uid(), done:false, text:"אימות מול אנשי קשר ברישום / מדינת דגל / גורמים רלוונטיים לפי MMSI."},
+          {id: uid(), done:false, text:"פתיחת תיק אירוע ותיעוד כל פעולות האימות והתקשורת."},
+          {id: uid(), done:false, text:"אם מתאמת תמונת מצוקה - הפעלת כוחות SAR והפצת הודעות לפי צורך."}
+        ]
+      },
+      {
+        id: uid(),
+        title: "EMSA - התראה על זיהום ימי",
+        note: "",
+        items: [
+          {id: uid(), done:false, text:"פתיחת הודעת EMSA ובדיקת חשד לזיהום: מיקום, זמן צילום, גודל כתם, רמת ודאות, כלי חשוד אם קיים."},
+          {id: uid(), done:false, text:"העברת הדיווח לגורמים הרלוונטיים (רס\"פן, המשרד להגנת הסביבה, חיל הים לפי צורך ועוד)."},
+          {id: uid(), done:false, text:"איתור כלי שיט בזירה ב-AIS/MarineTraffic ותשאול ב-VHF לפי צורך."},
+          {id: uid(), done:false, text:"תיעוד מלא של ממצאים, כלים שזוהו ומענה מהמכותבים."},
+          {id: uid(), done:false, text:"פתיחת תיק RCC להמשך מעקב אם נדרש."}
+        ]
+      },
+      {
+        id: uid(),
+        title: "MOB - אדם בים",
+        note: "",
+        items: [
+          {id: uid(), done:false, text:"קבלת דיווח: מיקום אחרון, שעה, מהירות כלי שיט, רוח וזרם. פתיחת תיק אירוע."},
+          {id: uid(), done:false, text:"הפעלת יחידות חילוץ זמינות (שיטור ימי, חיל הים, 669 לפי צורך)."},
+          {id: uid(), done:false, text:"סימון DATUM ב-OpenCPN (Waypoint עם שעה) והוספת נקודות דיווח/תצפית."},
+          {id: uid(), done:false, text:"חישוב תכנית חיפוש לפי פרמטרים (רוח/זרם/זמן) והפצה לגורמים הרלוונטיים."},
+          {id: uid(), done:false, text:"טעינת GRIB והערכת סחיפה משוערת מה-DATUM."},
+          {id: uid(), done:false, text:"שמירת GPX של האירוע להעברה בין משמרות אם צריך."},
+          {id: uid(), done:false, text:"שידור MAYDAY RELAY בהתאם לצורך. עדכון גורמים ותיעוד מלא."}
+        ]
+      },
+      {
+        id: uid(),
+        title: "Training - תרגול והשתלמות צוות",
+        note: "",
+        items: [
+          {id: uid(), done:false, text:"קביעת מועד מראש (לפחות אחת ל-60 יום)."},
+          {id: uid(), done:false, text:"בניית תרחיש (Overdue / DSC / MOB וכו)."},
+          {id: uid(), done:false, text:"שילוב תרגול מעשי עם סקירה עיונית ותדרוך מוקדם."},
+          {id: uid(), done:false, text:"קיום התרגול ותיעוד כל הפעולות."},
+          {id: uid(), done:false, text:"הפקת לקחים ומילוי טופס מסכם."},
+          {id: uid(), done:false, text:"תרגול חודשי לכל עובד בתוכנת החיפוש ותיעוד."},
+          {id: uid(), done:false, text:"סט OpenCPN מינימלי דו-שבועי: Waypoint, מדידת מרחק, Route, GRIB, שמירת GPX, ניקוי מפה."}
+        ]
+      },
+      {
+        id: uid(),
+        title: "OVERDUE - יאכטה נעדרת",
+        note: "",
+        items: [
+          {id: uid(), done:false, text:"קבלת דיווח ראשוני ותיעוד מלא: שם כלי, MMSI, נמל יציאה, יעד, תאריך, מספר אנשים, אמצעי קשר, ציוד בטיחות, משואות."},
+          {id: uid(), done:false, text:"בדיקות תקשורת: ניסיונות קשר ב-VHF, סלולר, לווייני. בדיקת שירותים (אם רלוונטי)."},
+          {id: uid(), done:false, text:"OpenCPN: Waypoint בנמל יציאה וביעד, Route בסיסי. אם יש LKP - סימון עם שעה והערכת נתיב."},
+          {id: uid(), done:false, text:"תיאום מול גורמים חיצוניים: חיל הים (תצפיות), RCC שכנים (הצלבות)."},
+          {id: uid(), done:false, text:"הערכת מצב: קביעה לשלב Alert/Distress לפי הצורך."},
+          {id: uid(), done:false, text:"פיתוח Search Plan: מינוי SMC, תכנון אזורי חיפוש, תיעוד מלא בתיק האירוע."},
+          {id: uid(), done:false, text:"הפצת מידע: NAVTEX לפי צורך, עדכון משטרה/רס\"פן/חדר מצב, תיעוד כל פעולה."}
+        ]
+      },
+      {
+        id: uid(),
+        title: "Debrief - תחקור אירועים",
+        note: "",
+        items: [
+          {id: uid(), done:false, text:"פתיחת תחקיר: רישום האירוע ביומן, מינוי אחראי תחקיר."},
+          {id: uid(), done:false, text:"איסוף נתונים: דוחות קשר, תיעוד מערכת, מיקומים, שיחות, עזרי חיפוש."},
+          {id: uid(), done:false, text:"ניתוח: מה קרה, מה עבד, מה נכשל, נקודות החלטה ושיקולים."},
+          {id: uid(), done:false, text:"גיבוש המלצות: ריענון נהלים, הדרכות, המלצות טכנולוגיות."},
+          {id: uid(), done:false, text:"כתיבת מסמך תחקיר מסכם (תמציתי ומקצועי) והפצה לפי רשימת מכותבים."}
+        ]
+      },
+      {
+        id: uid(),
+        title: "Tsunami - נוהל עבודה בנושא צונאמי",
+        note: "",
+        items: [
+          {id: uid(), done:false, text:"קבלת הודעה מהמכון הגיאולוגי (גם מקדמית) ופתיחת אירוע JRCC."},
+          {id: uid(), done:false, text:"עדכון גורמים רלוונטיים לפי הצורך (חיל הים, חדרי מצב, יחידות הצלה, פיקוד העורף בממשק)."},
+          {id: uid(), done:false, text:"איסוף תמונת מצב: מרינות, נמלים, תצפיות, כלי שיט בסיכון."},
+          {id: uid(), done:false, text:"עדכונים שוטפים לפי שינוי הערכת סיכון, כולל ביטול/הפחתה והפצת ביטול NAVTEX אם שודר."},
+          {id: uid(), done:false, text:"שיתוף מידע בזמן אמת ותיאום תדריכים תקופתיים לשיפור המענה."}
+        ]
+      }
+    ]
+  };
+
+  // ---------- State ----------
+  let appState = loadState() || structuredClone(DEFAULT_APP);
+  let currentView = "procedures";
+  let activeEvent = null;
+  let eventsData = [];
+  let selectedSavedEvent = null;
+  let isStartingEvent = false;
+  let procedureTempDone = {};
+  let crewMembers = [...DEFAULT_CREW];
+  let managedUsers = [];
+  let usersDocExists = false;
+  window.appState = appState;
+  window.saveToCloud = window.saveToCloud || (async function(){});
+  window.loadFromCloud = window.loadFromCloud || (async function(){ return null; });
+  window.saveEventToCloud = window.saveEventToCloud || (async function(){});
+  window.loadEventsFromCloud = window.loadEventsFromCloud || (async function(){ return []; });
+  window.deleteEventFromCloud = window.deleteEventFromCloud || (async function(){});
+  window.loadCrewListFromCloud = window.loadCrewListFromCloud || (async function(){ return null; });
+  window.saveCrewListToCloud = window.saveCrewListToCloud || (async function(){});
+  window.loadUsersFromCloud = window.loadUsersFromCloud || (async function(){ return { exists:false, users:[] }; });
+  window.saveUsersToCloud = window.saveUsersToCloud || (async function(){});
+  window.recheckCurrentUserAccess = window.recheckCurrentUserAccess || (async function(){});
+  window.isProcedureAdmin = window.isProcedureAdmin === true;
+  window.currentUserEmail = window.currentUserEmail || "";
+  window.currentUserRole = window.currentUserRole || "";
+  const TEAM_EMAIL = "rcchaifa@gmail.com";
+  const TEAM_ORDER_KEY = "jrcc_team_procedure_order_v1";
+
+  function normalizeEmail(email){
+    return String(email || "").trim().toLowerCase();
+  }
+
+  function normalizeManagedUsers(list){
+    const out = [];
+    const seen = new Set();
+    (Array.isArray(list) ? list : []).forEach((entry) => {
+      const email = normalizeEmail(entry?.email);
+      if(!email || seen.has(email)) return;
+      seen.add(email);
+      out.push({
+        email,
+        role: String(entry?.role || "").toLowerCase() === "admin" ? "admin" : "team"
+      });
+    });
+    return out;
+  }
+
+  function canEditProcedures(){
+    return String(window.currentUserRole || "") === "admin" || window.isProcedureAdmin === true;
+  }
+
+  function isProcedureBrowsingMode(){
+    return currentView === "procedures" && !activeEvent && !isStartingEvent;
+  }
+
+  function clearProcedureTempDone(){
+    procedureTempDone = {};
+  }
+
+  function getProcedureTempDoneSet(procedureId){
+    if(!procedureId) return new Set();
+    if(!Array.isArray(procedureTempDone[procedureId])) procedureTempDone[procedureId] = [];
+    return new Set(procedureTempDone[procedureId]);
+  }
+
+  function isProcedureItemDone(procedureId, itemId){
+    return getProcedureTempDoneSet(procedureId).has(itemId);
+  }
+
+  function setProcedureItemDone(procedureId, itemId, done){
+    if(!procedureId || !itemId) return;
+    const s = getProcedureTempDoneSet(procedureId);
+    if(done) s.add(itemId);
+    else s.delete(itemId);
+    procedureTempDone[procedureId] = [...s];
+  }
+
+  function updateModeStatusMessage(){
+    const el = $("#modeStatusMsg");
+    if(!el) return;
+    if(currentView !== "procedures"){
+      el.style.display = "none";
+      return;
+    }
+    el.style.display = "";
+    if(activeEvent){
+      el.textContent = "אירוע פעיל - הסימונים נשמרים בדוח האירוע";
+    }else{
+      el.textContent = "מצב עיון בנוהל - הסימונים זמניים ואינם נשמרים";
+    }
+  }
+
+  function isOperatorUser(){
+    return isTeamUser();
+  }
+
+  function canUseEvents(){
+    return isOperatorUser() || canEditProcedures();
+  }
+
+  function isTeamUser(){
+    return String(window.currentUserRole || "") === "team";
+  }
+
+  function loadTeamProcedureOrder(){
+    try{
+      const raw = localStorage.getItem(TEAM_ORDER_KEY);
+      if(!raw) return null;
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed.map(String) : null;
+    }catch(e){
+      return null;
+    }
+  }
+
+  function saveTeamProcedureOrder(orderIds){
+    if(!isTeamUser()) return;
+    localStorage.setItem(TEAM_ORDER_KEY, JSON.stringify(orderIds.map(String)));
+  }
+
+  function getDisplayedProcedures(){
+    if(!isTeamUser()) return appState.procedures;
+
+    const order = loadTeamProcedureOrder();
+    if(!Array.isArray(order) || order.length === 0) return appState.procedures;
+
+    const byId = new Map(appState.procedures.map(p => [p.id, p]));
+    const out = [];
+    order.forEach((id) => {
+      const p = byId.get(id);
+      if(p){
+        out.push(p);
+        byId.delete(id);
+      }
+    });
+    appState.procedures.forEach((p) => {
+      if(byId.has(p.id)) out.push(p);
+    });
+    return out;
+  }
+
+  function moveProcedureUpLocal(id){
+    if(!isTeamUser()) return;
+    const order = getDisplayedProcedures().map(p => p.id);
+    const idx = order.indexOf(id);
+    if(idx <= 0) return;
+    [order[idx - 1], order[idx]] = [order[idx], order[idx - 1]];
+    saveTeamProcedureOrder(order);
+  }
+
+  function moveProcedureDownLocal(id){
+    if(!isTeamUser()) return;
+    const order = getDisplayedProcedures().map(p => p.id);
+    const idx = order.indexOf(id);
+    if(idx < 0 || idx >= order.length - 1) return;
+    [order[idx], order[idx + 1]] = [order[idx + 1], order[idx]];
+    saveTeamProcedureOrder(order);
+  }
+
+  function applyRolePermissions(){
+    const allowedView = normalizeViewAccess(currentView);
+    if(allowedView !== currentView){
+      setView(allowedView);
+      return;
+    }
+    const editable = canEditProcedures();
+    const isTeam = isTeamUser();
+
+    const btnNewProc = $("#btnNewProc");
+    const btnDupProc = $("#btnDupProc");
+    const btnDelProc = $("#btnDelProc");
+    const btnSeedCloud = $("#btnSeedCloud");
+    const btnSave = $("#btnSave");
+    const btnExport = $("#btnExport");
+    const btnImport = $("#btnImport");
+    const titleInput = $("#procedureTitle");
+    const btnAddItem = $("#btnAddItem");
+    const newItemText = $("#newItemText");
+
+    if(btnNewProc) btnNewProc.style.display = editable ? "" : "none";
+    if(btnDupProc) btnDupProc.style.display = editable ? "" : "none";
+    if(btnDelProc) btnDelProc.style.display = editable ? "" : "none";
+    if(btnSeedCloud) btnSeedCloud.style.display = editable ? "" : "none";
+    if(btnSave) btnSave.style.display = isTeam ? "none" : "";
+    if(btnExport) btnExport.style.display = isTeam ? "none" : "";
+    if(btnImport) btnImport.style.display = isTeam ? "none" : "";
+    if(titleInput) titleInput.disabled = !editable;
+    if(btnAddItem){
+      btnAddItem.disabled = !editable;
+      btnAddItem.style.display = editable ? "" : "none";
+    }
+    if(newItemText){
+      newItemText.disabled = !editable;
+      newItemText.style.display = editable ? "" : "none";
+    }
+
+    document.querySelectorAll(".jsEdit, .jsSave, .jsCancel, .jsDelete").forEach((el) => {
+      el.style.display = editable ? "" : "none";
+      el.disabled = !editable;
+    });
+
+    const btnStartEvent = $("#btnStartEvent");
+    const btnSaveEvent = $("#btnSaveEvent");
+    const btnTabStats = $("#btnTabStats");
+    const btnTabCrew = $("#btnTabCrew");
+    const btnTabUsers = $("#btnTabUsers");
+    if(btnStartEvent) btnStartEvent.style.display = canUseEvents() ? "" : "none";
+    if(btnSaveEvent) btnSaveEvent.style.display = (canUseEvents() && activeEvent && currentView === "procedures") ? "" : "none";
+    if(btnTabStats) btnTabStats.style.display = canUseEvents() ? "" : "none";
+    if(btnTabCrew) btnTabCrew.style.display = canEditProcedures() ? "" : "none";
+    if(btnTabUsers) btnTabUsers.style.display = canEditProcedures() ? "" : "none";
+  }
+
+  function getVisibleEvents(){
+    if(canEditProcedures()) return eventsData;
+    const email = String(window.currentUserEmail || "").toLowerCase();
+    return eventsData.filter(ev => String(ev.operatorEmail || "").toLowerCase() === email);
+  }
+
+  async function reloadEventsData(){
+    try{
+      eventsData = await window.loadEventsFromCloud();
+    }catch(e){
+      eventsData = [];
+    }
+    populateYearDropdowns();
+    renderSavedEvents();
+    renderStats();
+  }
+
+  async function reloadCrewMembers(){
+    try{
+      const loaded = await window.loadCrewListFromCloud();
+      if(Array.isArray(loaded) && loaded.length){
+        crewMembers = loaded.map(x => String(x).trim()).filter(Boolean);
+      }else{
+        crewMembers = [...DEFAULT_CREW];
+      }
+    }catch(e){
+      crewMembers = [...DEFAULT_CREW];
+    }
+    renderEventStartPanel();
+    renderCrewAdminSection();
+  }
+
+  async function reloadManagedUsers(){
+    try{
+      const loaded = await window.loadUsersFromCloud();
+      managedUsers = normalizeManagedUsers(loaded?.users);
+      usersDocExists = loaded?.exists === true;
+    }catch(e){
+      managedUsers = [];
+      usersDocExists = false;
+    }
+    renderUsersAdminSection();
+  }
+
+  function populateYearDropdowns(){
+    const now = new Date();
+    const currentYear = String(now.getFullYear());
+    const yearsSet = new Set();
+    getVisibleEvents().forEach((ev) => {
+      const d = ev.createdAt ? new Date(ev.createdAt) : null;
+      if(d && !Number.isNaN(d.getTime())) yearsSet.add(String(d.getFullYear()));
+    });
+    if(!yearsSet.size) yearsSet.add(currentYear);
+    const years = [...yearsSet].sort((a,b) => Number(b) - Number(a));
+
+    const savedYearSel = $("#savedEventsYear");
+    const statsYearSel = $("#statsYear");
+    const prevSaved = savedYearSel?.value || "";
+    const prevStats = statsYearSel?.value || "";
+
+    if(savedYearSel){
+      savedYearSel.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join("");
+      savedYearSel.value = years.includes(prevSaved) ? prevSaved : currentYear;
+    }
+    if(statsYearSel){
+      statsYearSel.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join("");
+      statsYearSel.value = years.includes(prevStats) ? prevStats : currentYear;
+    }
+  }
+
+  function initTabFilterDefaults(){
+    const now = new Date();
+    const month = String(now.getMonth() + 1);
+    const year = String(now.getFullYear());
+    if($("#savedEventsMonth")) $("#savedEventsMonth").value = month;
+    if($("#savedEventsYear") && !$("#savedEventsYear").value) $("#savedEventsYear").value = year;
+    if($("#statsMonth")) $("#statsMonth").value = month;
+    if($("#statsYear") && !$("#statsYear").value) $("#statsYear").value = year;
+  }
+
+  function getSavedEventsFiltered(){
+    const month = Number(($("#savedEventsMonth")?.value || "0"));
+    const year = Number(($("#savedEventsYear")?.value || "0"));
+    return getVisibleEvents().filter((ev) => {
+      const d = ev.createdAt ? new Date(ev.createdAt) : null;
+      if(!d || Number.isNaN(d.getTime())) return false;
+      if((d.getMonth() + 1) !== month) return false;
+      if(d.getFullYear() !== year) return false;
+      return true;
+    });
+  }
+
+  function normalizeViewAccess(viewName){
+    if((viewName === "events" || viewName === "stats") && !canUseEvents()) return "procedures";
+    if((viewName === "crew" || viewName === "users") && !canEditProcedures()) return "procedures";
+    return viewName;
+  }
+
+  function setView(viewName){
+    viewName = normalizeViewAccess(viewName);
+    const prevView = currentView;
+    currentView = viewName;
+    const showProcedures = viewName === "procedures";
+    const showSavedEvents = viewName === "events";
+    const showStats = viewName === "stats";
+    const showCrewManage = viewName === "crew";
+    const showUsersManage = viewName === "users";
+    const showEventEditor = showProcedures && !!activeEvent;
+    const showEventStart = showProcedures && isStartingEvent && !activeEvent;
+
+    $("#proceduresComposer").style.display = showProcedures && !showEventEditor && !showEventStart ? "" : "none";
+    $("#proceduresContent").style.display = showProcedures && !showEventEditor && !showEventStart ? "" : "none";
+    $("#eventEditor").style.display = showEventEditor ? "" : "none";
+    $("#eventStartPanel").style.display = showEventStart ? "" : "none";
+    $("#savedEventsView").style.display = showSavedEvents ? "" : "none";
+    $("#statsView").style.display = showStats ? "" : "none";
+    $("#crewManageView").style.display = showCrewManage ? "" : "none";
+    $("#usersManageView").style.display = showUsersManage ? "" : "none";
+    const proceduresTopHeader = $("#proceduresTopHeader");
+    if(proceduresTopHeader) proceduresTopHeader.style.display = (showSavedEvents || showUsersManage) ? "none" : "";
+    const itemsPill = $("#itemsPill");
+    const todoPill = $("#todoPill");
+    const donePill = $("#donePill");
+    if(itemsPill) itemsPill.style.display = (showSavedEvents || showUsersManage) ? "none" : "";
+    if(todoPill) todoPill.style.display = (showSavedEvents || showUsersManage) ? "none" : "";
+    if(donePill) donePill.style.display = (showSavedEvents || showUsersManage) ? "none" : "";
+    if((prevView === "procedures" && viewName !== "procedures") || (prevView !== "procedures" && viewName === "procedures")){
+      clearProcedureTempDone();
+    }
+    updateModeStatusMessage();
+    applyRolePermissions();
+    if(showSavedEvents) renderSavedEvents();
+    if(showStats) renderStats();
+    if(showCrewManage) renderCrewAdminSection();
+    if(showUsersManage) renderUsersAdminSection();
+    if(showEventEditor) renderEventEditor();
+    if(showEventStart) renderEventStartPanel();
+  }
+
+  function startEventFromActiveProcedure(){
+    if(!canUseEvents()) return;
+    const p = getActive();
+    if(!p) return;
+    isStartingEvent = true;
+    setView("procedures");
+    $("#eventStartName").value = p.title || "";
+    $("#eventStartMeta").textContent = p.title || "-";
+    renderEventStartPanel();
+  }
+
+  function renderEventStartPanel(){
+    const list = $("#startCrewList");
+    if(!list) return;
+    list.innerHTML = "";
+    crewMembers.forEach((name) => {
+      const label = document.createElement("label");
+      label.className = "doneToggle";
+      label.style.marginInlineStart = "0";
+      label.innerHTML = `<input type="checkbox" class="jsStartCrew" value="${escapeHtml(name)}" /><span>${escapeHtml(name)}</span>`;
+      list.appendChild(label);
+    });
+  }
+
+  function formatShiftCrewValue(val){
+    if(Array.isArray(val)) return val.join(", ");
+    if(typeof val === "string" && val.trim()) return val.trim();
+    return "-";
+  }
+
+  function buildActiveEventFromStartForm(){
+    const p = getActive();
+    if(!p) return;
+    const eventName = ($("#eventStartName").value || "").trim();
+    if(!eventName){
+      $("#eventStartName").focus();
+      return;
+    }
+    const selectedCrew = [...document.querySelectorAll(".jsStartCrew:checked")].map(el => String(el.value || "").trim()).filter(Boolean);
+    activeEvent = {
+      eventId: uid(),
+      procedureId: p.id,
+      procedureTitle: p.title || "",
+      eventName: eventName,
+      operatorEmail: String(window.currentUserEmail || "").toLowerCase(),
+      shiftCrew: selectedCrew,
+      createdAt: new Date().toISOString(),
+      items: (p.items || []).map(it => ({
+        text: String(it.text || ""),
+        done: false,
+        addedByOperator: false
+      })),
+      notes: "",
+      summary: ""
+    };
+    isStartingEvent = false;
+    setView("procedures");
+  }
+
+  function reorderEventItems(){
+    if(!activeEvent || !Array.isArray(activeEvent.items)) return;
+    const todo = activeEvent.items.filter(x => !x.done);
+    const done = activeEvent.items.filter(x => x.done);
+    activeEvent.items = todo.concat(done);
+  }
+
+  function renderEventEditor(){
+    if(!activeEvent){
+      $("#eventEditor").style.display = "none";
+      return;
+    }
+    reorderEventItems();
+    $("#eventEditorTitle").textContent = `אירוע: ${activeEvent.eventName || "-"}`;
+    $("#eventEditorMeta").textContent = `${activeEvent.procedureTitle || "-"} | ${activeEvent.createdAt ? new Date(activeEvent.createdAt).toLocaleString() : "-"}`;
+    $("#eventNotes").value = activeEvent.notes || "";
+    $("#eventSummary").value = activeEvent.summary || "";
+    const list = $("#eventItemsList");
+    list.innerHTML = "";
+    activeEvent.items.forEach((item, idx) => {
+      const li = document.createElement("li");
+      li.className = "item";
+      li.innerHTML = `
+        <div class="handle"><div class="grip" aria-hidden="true"></div></div>
+        <div class="mainCol">
+          <div class="meta">
+            <span class="badge">#${idx + 1}</span>
+            <label class="doneToggle">
+              <input type="checkbox" class="jsEvDone" ${item.done ? "checked" : ""} />
+              <span>${item.done ? "בוצע" : "בוצע?"}</span>
+            </label>
+            <span class="badge">${item.addedByOperator ? "תפעולי" : "מקור"}</span>
+          </div>
+          <p class="text">${escapeHtml(item.text || "")}</p>
+          <textarea class="editArea" style="display:none;">${escapeHtml(item.text || "")}</textarea>
+        </div>
+        <div class="itemActions">
+          <button class="iconBtn ok jsEvEdit" ${item.addedByOperator ? "" : "style=\"display:none;\""}>✏️ ערוך</button>
+          <button class="iconBtn ok jsEvSave" style="display:none;">✅ שמור</button>
+          <button class="iconBtn jsEvCancel" style="display:none;">↩️ ביטול</button>
+          <button class="iconBtn danger jsEvDelete" ${item.addedByOperator ? "" : "style=\"display:none;\""}>🗑️ מחק</button>
+        </div>
+      `;
+      const doneCb = li.querySelector(".jsEvDone");
+      const btnEdit = li.querySelector(".jsEvEdit");
+      const btnSave = li.querySelector(".jsEvSave");
+      const btnCancel = li.querySelector(".jsEvCancel");
+      const btnDelete = li.querySelector(".jsEvDelete");
+      const textEl = li.querySelector(".text");
+      const editArea = li.querySelector(".editArea");
+
+      doneCb.addEventListener("change", () => {
+        item.done = doneCb.checked;
+        reorderEventItems();
+        renderEventEditor();
+      });
+      btnEdit?.addEventListener("click", () => {
+        textEl.style.display = "none";
+        editArea.style.display = "block";
+        btnEdit.style.display = "none";
+        btnSave.style.display = "";
+        btnCancel.style.display = "";
+      });
+      btnCancel?.addEventListener("click", () => {
+        editArea.value = item.text || "";
+        textEl.style.display = "";
+        editArea.style.display = "none";
+        btnEdit.style.display = "";
+        btnSave.style.display = "none";
+        btnCancel.style.display = "none";
+      });
+      btnSave?.addEventListener("click", () => {
+        item.text = (editArea.value || "").trim();
+        renderEventEditor();
+      });
+      btnDelete?.addEventListener("click", () => {
+        if(!item.addedByOperator) return;
+        activeEvent.items = activeEvent.items.filter(x => x !== item);
+        renderEventEditor();
+      });
+      list.appendChild(li);
+    });
+    applyRolePermissions();
+  }
+
+  async function saveActiveEvent(){
+    if(!activeEvent || !canUseEvents()) return;
+    activeEvent.notes = $("#eventNotes").value || "";
+    activeEvent.summary = $("#eventSummary").value || "";
+    reorderEventItems();
+    await window.saveEventToCloud(activeEvent);
+    alert("אירוע נשמר");
+    activeEvent = null;
+    setView("events");
+    await reloadEventsData();
+  }
+
+  function openSavedEventReport(ev){
+    selectedSavedEvent = ev || null;
+    renderSavedEventReport();
+  }
+
+  function renderSavedEventReport(){
+    const wrap = $("#savedEventReportWrap");
+    const body = $("#savedEventReportBody");
+    if(!wrap || !body) return;
+    if(!selectedSavedEvent){
+      wrap.style.display = "none";
+      body.innerHTML = "";
+      return;
+    }
+    wrap.style.display = "";
+    const items = Array.isArray(selectedSavedEvent.items) ? selectedSavedEvent.items : [];
+    const listHtml = items.map((it, idx) => `<li>${idx + 1}. ${escapeHtml(it.text || "")} ${it.done ? "✅" : ""}</li>`).join("");
+    body.innerHTML = `
+      <div class="savedEventHeader">
+        <h4 class="savedEventTitle">${escapeHtml(selectedSavedEvent.eventName || "-")}</h4>
+        <p class="savedEventMeta">נוהל: ${escapeHtml(selectedSavedEvent.procedureTitle || "-")}</p>
+        <p class="savedEventMeta">מפעיל: ${escapeHtml(selectedSavedEvent.operatorEmail || "-")}</p>
+        <p class="savedEventMeta">אנשי צוות במשמרת: ${escapeHtml(formatShiftCrewValue(selectedSavedEvent.shiftCrew))}</p>
+        <p class="savedEventMeta">תאריך: ${escapeHtml(selectedSavedEvent.createdAt ? new Date(selectedSavedEvent.createdAt).toLocaleString() : "-")}</p>
+      </div>
+      <div class="label">Checklist</div>
+      <ol class="savedEventChecklist">${listHtml || "<li>-</li>"}</ol>
+      <div class="label">Notes</div>
+      <p class="text savedEventBlock">${escapeHtml(selectedSavedEvent.notes || "-")}</p>
+      <div class="label" style="margin-top:8px;">Summary</div>
+      <p class="text savedEventBlock">${escapeHtml(selectedSavedEvent.summary || "-")}</p>
+    `;
+  }
+
+  function exportSelectedEventReport(){
+    if(!selectedSavedEvent) return;
+    const items = Array.isArray(selectedSavedEvent.items) ? selectedSavedEvent.items : [];
+    const rows = items.map((it, idx) => `<tr><td style="padding:4px 8px; border:1px solid #ddd;">${idx + 1}</td><td style="padding:4px 8px; border:1px solid #ddd;">${escapeHtml(it.text || "")}</td><td style="padding:4px 8px; border:1px solid #ddd;">${it.done ? "Done" : "Todo"}</td></tr>`).join("");
+    const w = window.open("", "_blank");
+    if(!w) return;
+    w.document.write(`
+      <html><head><title>Incident Report</title><style>
+      @page{size:A4;margin:10mm;}
+      body{font-family:Arial,sans-serif;font-size:12px;margin:0;direction:rtl;text-align:right;color:#0f172a;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#ffffff;}
+      .wrap{padding:10px 8px;}
+      .header{border:1px solid #c8d5e2;border-right:5px solid #2f5f84;border-radius:8px;padding:10px 12px;margin-bottom:10px;background:linear-gradient(180deg,#f8fbff,#eef4fa);}
+      .title{margin:0;font-size:21px;font-weight:800;letter-spacing:.2px;color:#15364d;}
+      .subtitle{margin:3px 0 0;font-size:13px;font-weight:700;color:#2d4f66;}
+      .meta{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;}
+      .meta div{padding:4px 8px;border:1px solid #d8e2ec;border-radius:6px;background:#fff;unicode-bidi:plaintext;}
+      .label{font-weight:700;color:#334155;}
+      .section{border:1px solid #d6e1eb;border-radius:8px;padding:8px 10px;margin:8px 0 0;background:#fff;}
+      .section h3{margin:0 0 6px;font-size:13px;color:#184766;}
+      table{width:100%;border-collapse:collapse;table-layout:fixed;}
+      th,td{border:1px solid #d6e1eb;padding:5px 7px;vertical-align:top;white-space:normal;word-break:normal;overflow-wrap:break-word;line-height:1.5;}
+      th{background:#f2f7fc;color:#1f3f56;}
+      .txt{white-space:pre-wrap;line-height:1.6;}
+      @media print{.wrap{padding:0;} .section{break-inside:avoid;}}
+      </style></head><body>
+      <div class="wrap">
+        <div class="header">
+          <h1 class="title">JRCC HAIFA</h1>
+          <div class="subtitle">Incident Report</div>
+          <div class="meta">
+            <div><span class="label">תאריך:</span> ${escapeHtml(selectedSavedEvent.createdAt ? new Date(selectedSavedEvent.createdAt).toLocaleString() : "-")}</div>
+            <div><span class="label">נוהל:</span> ${escapeHtml(selectedSavedEvent.procedureTitle || "-")}</div>
+            <div><span class="label">אירוע:</span> ${escapeHtml(selectedSavedEvent.eventName || "-")}</div>
+            <div><span class="label">מפעיל:</span> ${escapeHtml(selectedSavedEvent.operatorEmail || "-")}</div>
+            <div style="grid-column:1 / -1;"><span class="label">אנשי צוות במשמרת:</span> ${escapeHtml(formatShiftCrewValue(selectedSavedEvent.shiftCrew))}</div>
+          </div>
+        </div>
+        <section class="section">
+          <h3>Checklist</h3>
+          <table>
+            <thead><tr><th style="width:52px;">#</th><th>סעיף</th><th style="width:74px;">סטטוס</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </section>
+        <section class="section">
+          <h3>Notes</h3>
+          <div class="txt">${escapeHtml(selectedSavedEvent.notes || "-")}</div>
+        </section>
+        <section class="section">
+          <h3>Summary</h3>
+          <div class="txt">${escapeHtml(selectedSavedEvent.summary || "-")}</div>
+        </section>
+      </div>
+      </body></html>
+    `);
+    w.document.close();
+    w.focus();
+    w.print();
+  }
+
+  function renderSavedEvents(){
+    const wrap = $("#savedEventsTableWrap");
+    if(!wrap) return;
+    const rows = getSavedEventsFiltered().slice().sort((a,b) => String(b.createdAt || "").localeCompare(String(a.createdAt || "")));
+    if(selectedSavedEvent && !rows.some(x => x.eventId === selectedSavedEvent.eventId)){
+      selectedSavedEvent = null;
+    }
+    $("#savedEventsCount").textContent = String(rows.length);
+    if(!rows.length){
+      wrap.innerHTML = `<div class="sub">אין אירועים להצגה</div>`;
+      selectedSavedEvent = null;
+      renderSavedEventReport();
+      return;
+    }
+    wrap.innerHTML = "";
+    const table = document.createElement("table");
+    table.className = "savedEventsTable";
+    const thead = document.createElement("thead");
+    thead.innerHTML = `<tr><th class="label">תאריך</th><th class="label">נוהל</th><th class="label">שם אירוע</th><th class="label">מפעיל</th><th class="label">פעולות</th></tr>`;
+    table.appendChild(thead);
+    const tbody = document.createElement("tbody");
+    rows.forEach((ev) => {
+      const tr = document.createElement("tr");
+      tr.style.cursor = "pointer";
+      tr.innerHTML = `
+        <td>${escapeHtml(ev.createdAt ? new Date(ev.createdAt).toLocaleString() : "-")}</td>
+        <td>${escapeHtml(ev.procedureTitle || "-")}</td>
+        <td>${escapeHtml(ev.eventName || "-")}</td>
+        <td>${escapeHtml(ev.operatorEmail || "-")}</td>
+        <td></td>
+      `;
+      tr.addEventListener("click", () => openSavedEventReport(ev));
+      if(canEditProcedures()){
+        const btn = document.createElement("button");
+        btn.className = "iconBtn danger";
+        btn.textContent = "🗑️ מחק";
+        btn.addEventListener("click", async (e) => {
+          e.stopPropagation();
+          if(!confirm("למחוק אירוע?")) return;
+          await window.deleteEventFromCloud(ev.eventId);
+          if(selectedSavedEvent && selectedSavedEvent.eventId === ev.eventId){
+            selectedSavedEvent = null;
+            renderSavedEventReport();
+          }
+          await reloadEventsData();
+        });
+        tr.children[4].appendChild(btn);
+      }
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    wrap.appendChild(table);
+    renderSavedEventReport();
+  }
+
+  function renderCrewAdminSection(){
+    const section = $("#crewAdminSection");
+    const list = $("#crewMembersAdminList");
+    if(!section || !list) return;
+    if(!canEditProcedures()){
+      section.style.display = "none";
+      return;
+    }
+    section.style.display = "";
+    list.innerHTML = "";
+    crewMembers.forEach((name, idx) => {
+      const row = document.createElement("div");
+      row.className = "procItem";
+      row.style.gridTemplateColumns = "1fr auto";
+      row.style.cursor = "default";
+      row.innerHTML = `
+        <div><span>${escapeHtml(name)}</span></div>
+        <button class="iconBtn danger jsRemoveCrew">🗑️</button>
+      `;
+      const btnRemove = row.querySelector(".jsRemoveCrew");
+      btnRemove.addEventListener("click", async () => {
+        if(!canEditProcedures()) return;
+        crewMembers = crewMembers.filter((_, i) => i !== idx);
+        await window.saveCrewListToCloud(crewMembers);
+        renderCrewAdminSection();
+        renderEventStartPanel();
+      });
+      list.appendChild(row);
+    });
+  }
+
+  function renderUsersAdminSection(){
+    const section = $("#usersAdminSection");
+    const list = $("#usersAdminList");
+    if(!section || !list) return;
+    if(!canEditProcedures()){
+      section.style.display = "none";
+      return;
+    }
+    section.style.display = "";
+    const rows = normalizeManagedUsers(managedUsers).slice().sort((a, b) => a.email.localeCompare(b.email));
+    if(!rows.length){
+      list.innerHTML = `<div class="sub">${usersDocExists ? "אין משתמשים ברשימה" : "אין עדיין רשימת משתמשים. כתובת ${escapeHtml(TEAM_EMAIL)} נשארת fallback רק עד יצירת settings/users."}</div>`;
+      return;
+    }
+    list.innerHTML = `
+      <table class="savedEventsTable">
+        <thead>
+          <tr>
+            <th class="label">email</th>
+            <th class="label">role</th>
+            <th class="label">פעולות</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    `;
+    const tbody = list.querySelector("tbody");
+    rows.forEach((user) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${escapeHtml(user.email)}</td>
+        <td>${escapeHtml(user.role)}</td>
+        <td></td>
+      `;
+      const btnDelete = document.createElement("button");
+      btnDelete.className = "iconBtn danger";
+      btnDelete.textContent = "🗑️ מחק";
+      btnDelete.addEventListener("click", async () => {
+        if(!canEditProcedures()) return;
+        const prevUsers = [...managedUsers];
+        managedUsers = managedUsers.filter((entry) => normalizeEmail(entry?.email) !== user.email);
+        renderUsersAdminSection();
+        try{
+          await window.saveUsersToCloud(managedUsers);
+          await window.recheckCurrentUserAccess();
+        }catch(e){
+          managedUsers = prevUsers;
+          renderUsersAdminSection();
+          alert("שמירת המשתמשים נכשלה.");
+        }
+      });
+      tr.children[2].appendChild(btnDelete);
+      tbody.appendChild(tr);
+    });
+  }
+
+  function getStatsFilteredEvents(){
+    const month = ($("#statsMonth").value || "").trim();
+    const year = ($("#statsYear").value || "").trim();
+    return getVisibleEvents().filter((ev) => {
+      const d = ev.createdAt ? new Date(ev.createdAt) : null;
+      if(!d || Number.isNaN(d.getTime())) return false;
+      if(month && month !== "all" && (d.getMonth() + 1) !== Number(month)) return false;
+      if(year && d.getFullYear() !== Number(year)) return false;
+      return true;
+    });
+  }
+
+  function renderStats(){
+    const list = $("#statsList");
+    if(!list) return;
+    list.innerHTML = "";
+    const counts = new Map();
+    const filtered = getStatsFilteredEvents();
+    filtered.forEach((ev) => {
+      const key = String(ev.procedureTitle || "לא ידוע");
+      counts.set(key, (counts.get(key) || 0) + 1);
+    });
+    [...counts.entries()].sort((a,b) => b[1] - a[1]).forEach(([title, count]) => {
+      const li = document.createElement("li");
+      li.innerHTML = `<span>${escapeHtml(title)}</span> <span style="opacity:.8;">.............</span> <strong>${count}</strong>`;
+      list.appendChild(li);
+    });
+    const sm = ($("#statsMonth").value || "").trim();
+    const sy = ($("#statsYear").value || "").trim();
+    const monthLabel = sm === "all" ? "כל השנה" : (MONTH_NAMES_HE[Number(sm) - 1] || "-");
+    $("#statsMeta").textContent = sm === "all" ? `שנה: ${sy || "-"}` : `חודש: ${monthLabel} | שנה: ${sy || "-"}`;
+    if(!counts.size){
+      const li = document.createElement("li");
+      li.innerHTML = `<span>אין נתונים להצגה</span>`;
+      list.appendChild(li);
+    }
+  }
+
+  function printStatsReport(){
+    const filteredEvents = getStatsFilteredEvents();
+    const counts = new Map();
+    filteredEvents.forEach((ev) => {
+      const key = String(ev.procedureTitle || "לא ידוע");
+      counts.set(key, (counts.get(key) || 0) + 1);
+    });
+    const rows = [...counts.entries()].sort((a,b) => b[1]-a[1]).map(([title, count]) => ({ title, count }));
+    const sm = ($("#statsMonth").value || "").trim();
+    const sy = ($("#statsYear").value || "").trim();
+    const period = sm === "all" ? `Year: ${escapeHtml(sy || "-")}` : `Month: ${escapeHtml(MONTH_NAMES_HE[Number(sm) - 1] || "-")} | Year: ${escapeHtml(sy || "-")}`;
+    const lines = rows.map((r) => `
+      <div class="line">
+        <div class="lhs"><span>${escapeHtml(String(r.title))}</span><span class="dots"></span></div>
+        <span class="rhs">${escapeHtml(String(r.count))}</span>
+      </div>
+    `).join("");
+    const w = window.open("", "_blank");
+    if(!w) return;
+    w.document.write(`
+      <html><head><title>Operational Events Report</title><style>
+      @page{size:A4;margin:10mm;}
+      body{font-family:Arial,sans-serif;font-size:13px;margin:0;direction:rtl;text-align:right;color:#0f172a;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#ffffff;}
+      .wrap{padding:10px 8px;}
+      .header{border:1px solid #c8d5e2;border-right:5px solid #2f5f84;border-radius:8px;padding:10px 12px;margin-bottom:10px;background:linear-gradient(180deg,#f8fbff,#eef4fa);}
+      .title{margin:0;font-size:22px;font-weight:800;color:#15364d;}
+      .subtitle{margin:3px 0 0;font-size:13px;font-weight:700;color:#2d4f66;}
+      .period{margin-top:8px;font-size:12px;color:#334155;unicode-bidi:plaintext;}
+      .section{border:1px solid #d6e1eb;border-radius:8px;padding:8px 10px;background:#fff;}
+      .head{font-weight:700;margin:0 0 8px;display:flex;justify-content:space-between;color:#1f3f56;}
+      .line{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin:6px 0;}
+      .lhs{display:flex;align-items:flex-end;gap:8px;flex:1;white-space:normal;word-break:normal;overflow-wrap:break-word;}
+      .dots{flex:1;border-bottom:1px dotted #64748b;transform:translateY(-3px);}
+      .rhs{min-width:30px;text-align:left;font-weight:700;}
+      .total{margin-top:10px;padding-top:8px;border-top:1px solid #d6e1eb;font-weight:700;color:#1f3f56;}
+      @media print{.wrap{padding:0;} .section{break-inside:avoid;}}
+      </style></head><body>
+      <div class="wrap">
+        <div class="header">
+          <h1 class="title">JRCC HAIFA</h1>
+          <div class="subtitle">Operational Events Report</div>
+          <div class="period">${period}</div>
+        </div>
+        <section class="section">
+          <div class="head"><span>Procedure</span><span>Count</span></div>
+          ${lines || '<div>No data</div>'}
+          <div class="total">Total events: ${filteredEvents.length}</div>
+        </section>
+      </div>
+      </body></html>
+    `);
+    w.document.close();
+    w.focus();
+    w.print();
+  }
+
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return null;
+      const parsed = JSON.parse(raw);
+      if(!parsed || !Array.isArray(parsed.procedures)) return null;
+
+      // sanitize
+      parsed.procedures = parsed.procedures.map(p => ({
+        id: String(p.id || uid()),
+        title: String(p.title || "נוהל"),
+        note: String(p.note || ""),
+        items: Array.isArray(p.items) ? p.items.map(it => ({
+          id: String(it.id || uid()),
+          done: Boolean(it.done || false),
+          text: String(it.text || "")
+        })) : []
+      }));
+
+      if(!parsed.activeId || !parsed.procedures.some(p => p.id === parsed.activeId)){
+        parsed.activeId = parsed.procedures[0]?.id || null;
+      }
+      return parsed;
+    }catch(e){
+      return null;
+    }
+  }
+
+ function saveState(showToast){
+  // 1) תמיד שמירה מקומית
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+
+  // 2) תמיד שמירה לענן
+  window.saveToCloud().catch(() => {});
+
+  // 3) הודעה מקומית נשארת כמו שהיה לך
+  if(showToast){
+    if(typeof toast === "function") toast("נשמר בענן");
+    else alert("נשמר בענן");
+  }
+}
+  async function saveToCloud(){
+  if (typeof window.saveToCloud === "function") {
+    return window.saveToCloud();
+  }
+}
+
+async function loadFromCloud(){
+  return window.loadFromCloud();
+}
+
+  // ---------- Helpers ----------
+  function getActive(){
+    return appState.procedures.find(p => p.id === appState.activeId) || null;
+  }
+
+  function setActive(id){
+    if(appState.activeId !== id){
+      clearProcedureTempDone();
+    }
+    appState.activeId = id;
+    render();
+    saveState(false);
+  }
+
+  function countItems(p){
+    const total = p.items.length;
+    const done = isProcedureBrowsingMode() ? p.items.filter(x => isProcedureItemDone(p.id, x.id)).length : p.items.filter(x => x.done).length;
+    const todo = total - done;
+    return {total, done, todo};
+  }
+
+  // ---------- Rendering ----------
+  function render(){
+    // ensure active
+    if(!appState.activeId && appState.procedures.length){
+      appState.activeId = appState.procedures[0].id;
+    }
+
+    // left list
+    const list = $("#proceduresList");
+    const q = ($("#procSearch").value || "").trim().toLowerCase();
+
+    const displayedProcedures = getDisplayedProcedures();
+    const displayedIds = displayedProcedures.map(p => p.id);
+    const filtered = displayedProcedures.filter(p => (p.title || "").toLowerCase().includes(q));
+    list.innerHTML = "";
+
+    filtered.forEach((p) => {
+      const counts = countItems(p);
+      const orderIndex = displayedIds.indexOf(p.id);
+      const canMoveUp = isTeamUser() && orderIndex > 0;
+      const canMoveDown = isTeamUser() && orderIndex >= 0 && orderIndex < displayedIds.length - 1;
+      const li = document.createElement("li");
+      li.className = "procItem" + (p.id === appState.activeId ? " active" : "");
+      li.draggable = canEditProcedures();
+      li.dataset.id = p.id;
+
+      li.innerHTML = `
+        <div class="handle" title="גרור לשינוי סדר">
+          <div class="grip" aria-hidden="true"></div>
+        </div>
+        <div>
+          <div class="procName">
+            <span>${escapeHtml(p.title || "נוהל")}</span>
+            ${isTeamUser() ? `
+            <span style="display:inline-flex; gap:6px; align-items:center;">
+              <button class="iconBtn jsProcUp" ${canMoveUp ? "" : "disabled"}>↑</button>
+              <button class="iconBtn jsProcDown" ${canMoveDown ? "" : "disabled"}>↓</button>
+            </span>
+            ` : ""}
+            <span class="pill" style="padding:6px 10px;">${counts.total}</span>
+          </div>
+          <div class="procMeta">לביצוע: ${counts.todo} | בוצע: ${counts.done}</div>
+        </div>
+      `;
+
+      li.addEventListener("click", (e) => {
+        // clicking handle also triggers click; that's fine
+        setActive(p.id);
+      });
+      const btnUp = li.querySelector(".jsProcUp");
+      const btnDown = li.querySelector(".jsProcDown");
+      if(btnUp){
+        btnUp.addEventListener("click", (e) => {
+          e.stopPropagation();
+          moveProcedureUpLocal(p.id);
+          render();
+        });
+      }
+      if(btnDown){
+        btnDown.addEventListener("click", (e) => {
+          e.stopPropagation();
+          moveProcedureDownLocal(p.id);
+          render();
+        });
+      }
+
+      // drag reorder
+      li.addEventListener("dragstart", (e) => {
+        if(!canEditProcedures()){
+          e.preventDefault();
+          return;
+        }
+        li.classList.add("dragging");
+        e.dataTransfer.setData("text/plain", p.id);
+        e.dataTransfer.effectAllowed = "move";
+      });
+      li.addEventListener("dragend", () => li.classList.remove("dragging"));
+
+      list.appendChild(li);
+    });
+
+    $("#procCount").textContent = `${appState.procedures.length} נהלים`;
+    const active = getActive();
+    $("#activePill").textContent = active ? "נבחר: " + (active.title || "נוהל") : "-";
+
+    // right panel
+    if(!active){
+      $("#procedureTitle").value = "";
+      $("#procedureNote").value = "";
+      $("#itemsPill").textContent = "0 סעיפים";
+      $("#todoPill").textContent = "0 לביצוע";
+      $("#donePill").textContent = "0 בוצע";
+      $("#todoCount").textContent = "0";
+      $("#doneCount").textContent = "0";
+      $("#todoList").innerHTML = "";
+      $("#doneList").innerHTML = "";
+      updateModeStatusMessage();
+      applyRolePermissions();
+      return;
+    }
+
+    $("#procedureTitle").value = active.title || "";
+    $("#procedureNote").value = active.note || "";
+
+    const counts = countItems(active);
+    $("#itemsPill").textContent = `${counts.total} סעיפים`;
+    $("#todoPill").textContent = `${counts.todo} לביצוע`;
+    $("#donePill").textContent = `${counts.done} בוצע`;
+    $("#todoCount").textContent = `${counts.todo}`;
+    $("#doneCount").textContent = `${counts.done}`;
+
+    const todo = active.items.filter(x => !isProcedureItemDone(active.id, x.id));
+    const done = active.items.filter(x => isProcedureItemDone(active.id, x.id));
+
+    renderItemsList($("#todoList"), todo, "todo");
+    renderItemsList($("#doneList"), done, "done");
+    updateModeStatusMessage();
+    applyRolePermissions();
+
+    document.title = "JRCC - " + (active.title || "נהלים");
+  }
+
+  function renderItemsList(container, items, kind){
+    container.innerHTML = "";
+
+    items.forEach((item, idx) => {
+      const activeProc = getActive();
+      const itemDone = activeProc ? isProcedureItemDone(activeProc.id, item.id) : false;
+      const li = document.createElement("li");
+      li.className = "item";
+      li.draggable = canEditProcedures();
+      li.dataset.id = item.id;
+      li.dataset.kind = kind;
+
+      li.innerHTML = `
+        <div class="handle" title="גרור לשינוי סדר">
+          <div class="grip" aria-hidden="true"></div>
+        </div>
+
+        <div class="mainCol">
+          <div class="meta">
+            <span class="badge">#${idx + 1}</span>
+            <label class="doneToggle" title="סמן בוצע / החזר לביצוע">
+              <input type="checkbox" class="jsDone" ${itemDone ? "checked" : ""} />
+              <span>${itemDone ? "בוצע" : "בוצע?"}</span>
+            </label>
+          </div>
+
+          <p class="text">${escapeHtml(item.text || "")}</p>
+          <textarea class="editArea" spellcheck="false">${escapeHtml(item.text || "")}</textarea>
+        </div>
+
+        <div class="itemActions">
+          <button class="iconBtn ok jsEdit">✏️ ערוך</button>
+          <button class="iconBtn ok jsSave" style="display:none;">✅ שמור</button>
+          <button class="iconBtn jsCancel" style="display:none;">↩️ ביטול</button>
+          <button class="iconBtn danger jsDelete">🗑️ מחק</button>
+        </div>
+      `;
+
+      const doneCb = li.querySelector(".jsDone");
+      const btnEdit = li.querySelector(".jsEdit");
+      const btnSave = li.querySelector(".jsSave");
+      const btnCancel = li.querySelector(".jsCancel");
+      const btnDelete = li.querySelector(".jsDelete");
+      const editArea = li.querySelector(".editArea");
+
+      doneCb.addEventListener("change", () => {
+        const p = getActive();
+        if(!p) return;
+        setProcedureItemDone(p.id, item.id, doneCb.checked);
+        render();
+      });
+
+      btnEdit.addEventListener("click", () => {
+        if(!canEditProcedures()) return;
+        li.classList.add("editing");
+        btnEdit.style.display = "none";
+        btnSave.style.display = "";
+        btnCancel.style.display = "";
+        editArea.focus();
+        editArea.setSelectionRange(editArea.value.length, editArea.value.length);
+      });
+
+      btnCancel.addEventListener("click", () => {
+        if(!canEditProcedures()) return;
+        li.classList.remove("editing");
+        btnEdit.style.display = "";
+        btnSave.style.display = "none";
+        btnCancel.style.display = "none";
+        editArea.value = item.text || "";
+      });
+
+      btnSave.addEventListener("click", () => {
+        if(!canEditProcedures()) return;
+        const p = getActive();
+        if(!p) return;
+        const it = p.items.find(x => x.id === item.id);
+        if(!it) return;
+        it.text = (editArea.value || "").trim();
+        li.classList.remove("editing");
+        btnEdit.style.display = "";
+        btnSave.style.display = "none";
+        btnCancel.style.display = "none";
+        saveState(false);
+        render();
+      });
+
+      btnDelete.addEventListener("click", () => {
+        if(!canEditProcedures()) return;
+        if(!confirm("למחוק את הסעיף הזה?")) return;
+        const p = getActive();
+        if(!p) return;
+        p.items = p.items.filter(x => x.id !== item.id);
+        saveState(false);
+        render();
+      });
+
+      // drag reorder within todo/done groups, but keep both groups stable
+      li.addEventListener("dragstart", (e) => {
+        if(!canEditProcedures()){
+          e.preventDefault();
+          return;
+        }
+        li.classList.add("dragging");
+        e.dataTransfer.setData("text/plain", item.id);
+        e.dataTransfer.effectAllowed = "move";
+      });
+      li.addEventListener("dragend", () => li.classList.remove("dragging"));
+
+      container.appendChild(li);
+    });
+  }
+
+  function getDragAfterElement(container, y){
+    const draggableElements = [...container.querySelectorAll(".item:not(.dragging), .procItem:not(.dragging)")];
+    return draggableElements.reduce((closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      if(offset < 0 && offset > closest.offset){
+        return { offset, element: child };
+      }
+      return closest;
+    }, { offset: Number.NEGATIVE_INFINITY, element: null }).element;
+  }
+
+  // bind procedure list drag
+  (function bindProcDrag(){
+    const container = $("#proceduresList");
+    container.addEventListener("dragover", (e) => {
+      if(!canEditProcedures()) return;
+      e.preventDefault();
+      const after = getDragAfterElement(container, e.clientY);
+      const dragging = container.querySelector(".dragging");
+      if(!dragging) return;
+      if(after == null) container.appendChild(dragging);
+      else container.insertBefore(dragging, after);
+    });
+
+    container.addEventListener("drop", (e) => {
+      if(!canEditProcedures()) return;
+      e.preventDefault();
+      const order = [...container.querySelectorAll(".procItem")].map(el => el.dataset.id);
+      const newArr = [];
+      order.forEach(id => {
+        const found = appState.procedures.find(p => p.id === id);
+        if(found) newArr.push(found);
+      });
+      // include any not visible due to search filter (keep at end)
+      appState.procedures.forEach(p => {
+        if(!newArr.some(x => x.id === p.id)) newArr.push(p);
+      });
+      appState.procedures = newArr;
+      saveState(false);
+      render();
+    });
+  })();
+
+  // bind item drag for both lists
+  function bindItemDrag(listId, doneValue){
+    const container = $(listId);
+    container.addEventListener("dragover", (e) => {
+      if(!canEditProcedures()) return;
+      e.preventDefault();
+      const after = getDragAfterElement(container, e.clientY);
+      const dragging = container.querySelector(".dragging");
+      if(!dragging) return;
+      if(after == null) container.appendChild(dragging);
+      else container.insertBefore(dragging, after);
+    });
+
+    container.addEventListener("drop", (e) => {
+      if(!canEditProcedures()) return;
+      e.preventDefault();
+      const p = getActive();
+      if(!p) return;
+
+      const order = [...container.querySelectorAll(".item")].map(el => el.dataset.id);
+      const doneByMode = (x) => isProcedureBrowsingMode() ? isProcedureItemDone(p.id, x.id) : x.done;
+      const group = p.items.filter(x => doneByMode(x) === doneValue);
+      const other = p.items.filter(x => doneByMode(x) !== doneValue);
+
+      const newGroup = [];
+      order.forEach(id => {
+        const found = group.find(x => x.id === id);
+        if(found) newGroup.push(found);
+      });
+      // keep leftovers
+      group.forEach(x => { if(!newGroup.some(y => y.id === x.id)) newGroup.push(x); });
+
+      // keep todo first then done (stable)
+      if(doneValue){
+        p.items = other.concat(newGroup);
+      }else{
+        p.items = newGroup.concat(other);
+      }
+      saveState(false);
+      render();
+    });
+  }
+
+  bindItemDrag("#todoList", false);
+  bindItemDrag("#doneList", true);
+
+  // ---------- UI events ----------
+  $("#btnTabProcedures").addEventListener("click", () => setView("procedures"));
+  $("#btnTabEvents").addEventListener("click", () => setView("events"));
+  $("#btnTabStats").addEventListener("click", () => {
+    if(!canUseEvents()) return;
+    setView("stats");
+  });
+  $("#btnTabCrew").addEventListener("click", () => {
+    if(!canEditProcedures()) return;
+    setView("crew");
+  });
+  $("#btnTabUsers").addEventListener("click", () => {
+    if(!canEditProcedures()) return;
+    setView("users");
+  });
+  $("#btnStartEvent").addEventListener("click", startEventFromActiveProcedure);
+  $("#btnConfirmStartEvent").addEventListener("click", buildActiveEventFromStartForm);
+  $("#btnCancelStartEvent").addEventListener("click", () => {
+    isStartingEvent = false;
+    setView("procedures");
+  });
+  $("#btnAddCrewMember").addEventListener("click", async () => {
+    if(!canEditProcedures()) return;
+    const raw = ($("#crewNameInput").value || "").trim();
+    if(!raw) return;
+    if(crewMembers.some(x => String(x).trim() === raw)){
+      $("#crewNameInput").value = "";
+      return;
+    }
+    crewMembers = crewMembers.concat(raw);
+    await window.saveCrewListToCloud(crewMembers);
+    $("#crewNameInput").value = "";
+    renderCrewAdminSection();
+    renderEventStartPanel();
+  });
+  $("#crewNameInput").addEventListener("keydown", (e) => {
+    if(e.key === "Enter"){
+      e.preventDefault();
+      $("#btnAddCrewMember").click();
+    }
+  });
+  $("#btnAddManagedUser").addEventListener("click", async () => {
+    if(!canEditProcedures()) return;
+    const email = normalizeEmail($("#userEmailInput").value);
+    const role = String($("#userRoleSelect").value || "team").toLowerCase() === "admin" ? "admin" : "team";
+    if(!email || !email.includes("@")){
+      $("#userEmailInput").focus();
+      return;
+    }
+    const exists = managedUsers.some(user => normalizeEmail(user.email) === email);
+    if(exists){
+      $("#userEmailInput").value = "";
+      $("#userEmailInput").focus();
+      return;
+    }
+    const prevUsers = [...managedUsers];
+    managedUsers = normalizeManagedUsers(managedUsers.concat({ email, role }));
+    renderUsersAdminSection();
+    try{
+      await window.saveUsersToCloud(managedUsers);
+      $("#userEmailInput").value = "";
+      $("#userRoleSelect").value = "team";
+      await window.recheckCurrentUserAccess();
+    }catch(e){
+      managedUsers = prevUsers;
+      renderUsersAdminSection();
+      alert("שמירת המשתמשים נכשלה.");
+    }
+  });
+  $("#userEmailInput").addEventListener("keydown", (e) => {
+    if(e.key === "Enter"){
+      e.preventDefault();
+      $("#btnAddManagedUser").click();
+    }
+  });
+  $("#btnSaveEvent").addEventListener("click", saveActiveEvent);
+  $("#btnAddEventItem").addEventListener("click", () => {
+    if(!activeEvent || !canUseEvents()) return;
+    const txt = ($("#newEventItemText").value || "").trim();
+    if(!txt) return;
+    activeEvent.items.push({ text: txt, done:false, addedByOperator:true });
+    $("#newEventItemText").value = "";
+    renderEventEditor();
+  });
+  $("#eventNotes").addEventListener("input", () => {
+    if(!activeEvent) return;
+    activeEvent.notes = $("#eventNotes").value || "";
+  });
+  $("#eventSummary").addEventListener("input", () => {
+    if(!activeEvent) return;
+    activeEvent.summary = $("#eventSummary").value || "";
+  });
+  $("#savedEventsMonth").addEventListener("change", renderSavedEvents);
+  $("#savedEventsYear").addEventListener("change", renderSavedEvents);
+  $("#statsMonth").addEventListener("change", renderStats);
+  $("#statsYear").addEventListener("change", renderStats);
+  $("#btnPrintReport").addEventListener("click", printStatsReport);
+  $("#btnExportEventReport").addEventListener("click", exportSelectedEventReport);
+
+  $("#procSearch").addEventListener("input", render);
+
+  $("#procedureTitle").addEventListener("input", () => {
+    if(!canEditProcedures()) return;
+    const p = getActive();
+    if(!p) return;
+    p.title = $("#procedureTitle").value.trim();
+    saveState(false);
+    render();
+  });
+
+  $("#procedureNote").addEventListener("input", () => {
+    const p = getActive();
+    if(!p) return;
+    p.note = $("#procedureNote").value;
+    saveState(false);
+  });
+
+  $("#btnAddItem").addEventListener("click", () => {
+    if(!canEditProcedures()) return;
+    const p = getActive();
+    if(!p) return;
+    const txt = ($("#newItemText").value || "").trim();
+    if(!txt){
+      alert("כתוב טקסט לסעיף לפני הוספה.");
+      $("#newItemText").focus();
+      return;
+    }
+    p.items.push({ id: uid(), done:false, text: txt });
+    $("#newItemText").value = "";
+    saveState(false);
+    render();
+  });
+
+  $("#newItemText").addEventListener("keydown", (e) => {
+    if(!canEditProcedures()) return;
+    if(e.key === "Enter" && (e.ctrlKey || e.metaKey)){
+      $("#btnAddItem").click();
+    }
+  });
+
+  $("#btnNewProc").addEventListener("click", () => {
+    if(!canEditProcedures()) return;
+    const name = prompt("שם נוהל חדש:", "נוהל חדש");
+    if(!name) return;
+    const p = { id: uid(), title: name.trim(), note:"", items: [] };
+    appState.procedures.unshift(p);
+    appState.activeId = p.id;
+    saveState(false);
+    render();
+  });
+
+  $("#btnDupProc").addEventListener("click", () => {
+    if(!canEditProcedures()) return;
+    const p = getActive();
+    if(!p) return;
+    const newName = prompt("שם לנוהל המשוכפל:", (p.title || "נוהל") + " (עותק)");
+    if(!newName) return;
+    const clone = {
+      id: uid(),
+      title: newName.trim(),
+      note: p.note || "",
+      items: p.items.map(it => ({ id: uid(), done:false, text: it.text }))
+    };
+    appState.procedures.unshift(clone);
+    appState.activeId = clone.id;
+    saveState(false);
+    render();
+  });
+
+  $("#btnDelProc").addEventListener("click", () => {
+    if(!canEditProcedures()) return;
+    const p = getActive();
+    if(!p) return;
+    if(!confirm("למחוק את הנוהל הזה?")) return;
+    appState.procedures = appState.procedures.filter(x => x.id !== p.id);
+    appState.activeId = appState.procedures[0]?.id || null;
+    saveState(false);
+    render();
+  });
+
+  $("#btnSave").addEventListener("click", () => {
+    saveState(true);
+  });
+
+  $("#btnExport").addEventListener("click", async () => {
+    const json = JSON.stringify(appState, null, 2);
+    try{
+      await navigator.clipboard.writeText(json);
+      alert("ה-JSON הועתק ללוח. אפשר להדביק בקובץ טקסט או ביבוא.");
+    }catch{
+      prompt("העתק ידנית את ה-JSON הבא:", json);
+    }
+  });
+
+  $("#btnImport").addEventListener("click", () => {
+    const raw = prompt("הדבק כאן JSON שיוצא מהמערכת:");
+    if(!raw) return;
+    try{
+      const parsed = JSON.parse(raw);
+      if(!parsed || !Array.isArray(parsed.procedures)) throw new Error("bad");
+      // sanitize
+      parsed.procedures = parsed.procedures.map(p => ({
+        id: String(p.id || uid()),
+        title: String(p.title || "נוהל"),
+        note: String(p.note || ""),
+        items: Array.isArray(p.items) ? p.items.map(it => ({
+          id: String(it.id || uid()),
+          done: Boolean(it.done || false),
+          text: String(it.text || "")
+        })) : []
+      }));
+      if(!parsed.activeId || !parsed.procedures.some(p => p.id === parsed.activeId)){
+        parsed.activeId = parsed.procedures[0]?.id || null;
+      }
+      appState = parsed;
+      window.appState = appState;
+      saveState(false);
+      render();
+    }catch(e){
+      alert("JSON לא תקין או מבנה לא נכון.");
+    }
+  });
+
+const btnPrint = $("#btnPrint");
+  if (btnPrint) btnPrint.addEventListener("click", () => window.print());
+
+const btnReset = $("#btnReset");
+if (btnReset) btnReset.addEventListener("click", () => {
+  if(!confirm("לאפס לברירת מחדל? זה ידרוס את השינויים בדפדפן.")) return;
+  appState = structuredClone(DEFAULT_APP);
+  window.appState = appState;
+  appState.activeId = appState.procedures[0]?.id || null;
+  saveState(false);
+  render();
+});
+  async function bootstrap(){
+  let cloudState = null;
+  try{
+    cloudState = await window.loadFromCloud();
+  }catch(e){
+    cloudState = null;
+  }
+
+  if(cloudState){
+    appState = cloudState;
+  } else {
+    const saved = loadState();
+    if(saved) appState = saved;
+    else appState = structuredClone(DEFAULT_APP);
+  }
+
+  window.appState = appState;
+
+  if(!appState.activeId && appState.procedures.length){
+    appState.activeId = appState.procedures[0].id;
+  }
+
+  initTabFilterDefaults();
+  render();
+  setView("procedures");
+  await reloadEventsData();
+  await reloadCrewMembers();
+}
+
+window.bootstrap = bootstrap;
+window.applyRolePermissions = applyRolePermissions;
+window.reloadEventsData = reloadEventsData;
+window.reloadCrewMembers = reloadCrewMembers;
+window.reloadManagedUsers = reloadManagedUsers;
+</script>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, doc, setDoc, getDoc, getDocs, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDgKsec94uE9kTUBL8oB7qTksOxmQ2ykxg",
+  authDomain: "protocol-85f83.firebaseapp.com",
+  projectId: "protocol-85f83",
+  storageBucket: "protocol-85f83.firebasestorage.app",
+  messagingSenderId: "775935948819",
+  appId: "1:775935948819:web:b02eaacb2c51ec7bbbe7e6"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+window.saveToCloud = async function(){
+  if (!auth.currentUser) return;
+  await setDoc(
+    doc(db, "protocols", "main"),
+    { state: window.appState, updated: new Date().toISOString() },
+    { merge: true }
+  );
+  console.log("Saved to cloud");
+};
+window.loadFromCloud = async function(){
+  const snap = await getDoc(doc(db, "protocols", "main"));
+  if(!snap.exists()) return null;
+
+  const data = snap.data();
+  const st = data?.state;
+
+  if(!st) return null;
+  if(!Array.isArray(st.procedures)) return null;
+  if(st.procedures.length === 0) return null;
+
+  console.log("Loaded from cloud");
+  return st;
+};
+window.saveEventToCloud = async function(eventData){
+  if (!auth.currentUser || !eventData?.eventId) return;
+  await setDoc(doc(db, "events", eventData.eventId), eventData, { merge: true });
+};
+window.loadEventsFromCloud = async function(){
+  if (!auth.currentUser) return [];
+  const snap = await getDocs(collection(db, "events"));
+  return snap.docs.map(d => ({ eventId: d.id, ...d.data() }));
+};
+window.deleteEventFromCloud = async function(eventId){
+  if (!auth.currentUser || !hasAdminAccess(auth.currentUser) || !eventId) return;
+  await deleteDoc(doc(db, "events", eventId));
+};
+window.loadCrewListFromCloud = async function(){
+  if (!auth.currentUser) return null;
+  const snap = await getDoc(doc(db, "settings", "crew"));
+  if(!snap.exists()) return null;
+  const members = snap.data()?.members;
+  if(!Array.isArray(members)) return null;
+  return members.map(x => String(x || "").trim()).filter(Boolean);
+};
+window.saveCrewListToCloud = async function(members){
+  if (!auth.currentUser || !hasAdminAccess(auth.currentUser)) return;
+  const clean = Array.isArray(members) ? members.map(x => String(x || "").trim()).filter(Boolean) : [];
+  await setDoc(doc(db, "settings", "crew"), { members: clean }, { merge: true });
+};
+window.loadUsersFromCloud = async function(){
+  if (!auth.currentUser) return { exists:false, users:[] };
+  const snap = await getDoc(doc(db, "settings", "users"));
+  if(!snap.exists()) return { exists:false, users:[] };
+  const users = snap.data()?.users;
+  return {
+    exists: true,
+    users: Array.isArray(users) ? users : []
+  };
+};
+window.saveUsersToCloud = async function(users){
+  if (!auth.currentUser || !hasAdminAccess(auth.currentUser)) return;
+  const seen = new Set();
+  const clean = (Array.isArray(users) ? users : []).reduce((acc, entry) => {
+    const email = String(entry?.email || "").trim().toLowerCase();
+    if(!email || seen.has(email)) return acc;
+    seen.add(email);
+    acc.push({
+      email,
+      role: String(entry?.role || "").toLowerCase() === "admin" ? "admin" : "team"
+    });
+    return acc;
+  }, []);
+  await setDoc(doc(db, "settings", "users"), { users: clean }, { merge: true });
+};
+
+const provider = new GoogleAuthProvider();
+
+window.login = async function () {
+  setAuthGateLoginState();
+  await signInWithPopup(auth, provider);
+};
+
+window.logout = async function () {
+  setAuthGateLoginState();
+  await signOut(auth);
+};
+const authGate = document.getElementById("authGate");
+const authGateTitle = document.getElementById("authGateTitle");
+const authGateSubtitle = document.getElementById("authGateSubtitle");
+const btnLogin = document.getElementById("btnLogin");
+const btnLogout = document.getElementById("btnLogout");
+const btnSeedCloud = document.getElementById("btnSeedCloud");
+const userRolePill = document.getElementById("userRolePill");
+const ADMIN_EMAILS = new Set([
+  "ranyakar@gmail.com"
+]);
+const TEAM_EMAIL_FALLBACK = "rcchaifa@gmail.com";
+
+function normalizeEmail(email){
+  return String(email || "").trim().toLowerCase();
+}
+
+function sanitizeStoredUsers(list){
+  const seen = new Set();
+  return (Array.isArray(list) ? list : []).reduce((acc, entry) => {
+    const email = normalizeEmail(entry?.email);
+    if(!email || seen.has(email)) return acc;
+    seen.add(email);
+    acc.push({
+      email,
+      role: String(entry?.role || "").toLowerCase() === "admin" ? "admin" : "team"
+    });
+    return acc;
+  }, []);
+}
+
+function setAuthGateLoginState(){
+  if (authGateTitle) authGateTitle.textContent = "התחברות נדרשת";
+  if (authGateSubtitle) authGateSubtitle.textContent = "כניסה עם חשבון Google של JRCC";
+}
+
+function setAuthGateDeniedState(email){
+  if (authGateTitle) authGateTitle.textContent = "אין הרשאה למערכת";
+  if (authGateSubtitle) authGateSubtitle.textContent = `החשבון ${email || ""} אינו מורשה לשימוש במערכת.`;
+}
+
+function isAdminUser(user){
+  const email = normalizeEmail(user?.email);
+  return ADMIN_EMAILS.has(email);
+}
+
+function hasAdminAccess(user){
+  return isAdminUser(user) || String(window.currentUserRole || "") === "admin";
+}
+
+async function resolveUserAccess(user){
+  const email = normalizeEmail(user?.email);
+  if(!email) return { allowed:false, role:"" };
+  if(ADMIN_EMAILS.has(email)) return { allowed:true, role:"admin" };
+  const usersData = await window.loadUsersFromCloud();
+  const users = sanitizeStoredUsers(usersData?.users);
+  const found = users.find(entry => entry.email === email);
+  if(found) return { allowed:true, role: found.role };
+  if(usersData?.exists !== true && email === TEAM_EMAIL_FALLBACK) return { allowed:true, role:"team" };
+  return { allowed:false, role:"" };
+}
+
+async function applyAccessState(user, access){
+  window.isProcedureAdmin = access.role === "admin";
+  window.currentUserRole = access.role || "";
+  window.currentUserEmail = normalizeEmail(user?.email);
+  authGate.style.display = "none";
+  btnLogout.style.display = "";
+  if (btnSeedCloud) btnSeedCloud.style.display = access.role === "admin" ? "" : "none";
+  if (userRolePill) userRolePill.textContent = access.role === "admin" ? "Admin" : "Team";
+  if (typeof window.applyRolePermissions === "function") window.applyRolePermissions();
+  if (typeof window.reloadEventsData === "function") await window.reloadEventsData();
+  if (typeof window.reloadCrewMembers === "function") await window.reloadCrewMembers();
+  if (typeof window.reloadManagedUsers === "function") await window.reloadManagedUsers();
+}
+
+window.recheckCurrentUserAccess = async function(){
+  if (!auth.currentUser) return;
+  const access = await resolveUserAccess(auth.currentUser);
+  if(!access.allowed){
+    setAuthGateDeniedState(auth.currentUser.email || "");
+    await signOut(auth);
+    return;
+  }
+  await applyAccessState(auth.currentUser, access);
+};
+
+btnLogin.addEventListener("click", async () => {
+  setAuthGateLoginState();
+  await signInWithPopup(auth, provider);
+});
+
+btnLogout.addEventListener("click", async () => {
+  setAuthGateLoginState();
+  await signOut(auth);
+});
+
+if (btnSeedCloud) {
+  btnSeedCloud.addEventListener("click", async () => {
+    if (!hasAdminAccess(auth.currentUser)) return;
+    if (!window.appState || !Array.isArray(window.appState.procedures) || window.appState.procedures.length === 0) return;
+    await window.saveToCloud();
+    alert("נשמר בענן");
+  });
+}
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    console.log("logged in:", user.email);
+    const access = await resolveUserAccess(user);
+    if(!access.allowed){
+      setAuthGateDeniedState(user.email || "");
+      alert("אין לך הרשאה למערכת.");
+      await signOut(auth);
+      return;
+    }
+    await applyAccessState(user, access);
+  } else {
+    console.log("not logged in");
+    window.isProcedureAdmin = false;
+    window.currentUserRole = "";
+    window.currentUserEmail = "";
+    authGate.style.display = "flex";
+    btnLogout.style.display = "none";
+    if (btnSeedCloud) btnSeedCloud.style.display = "none";
+    if (userRolePill) userRolePill.textContent = "לא מחובר";
+    if (typeof window.applyRolePermissions === "function") window.applyRolePermissions();
+    if (typeof window.reloadEventsData === "function") window.reloadEventsData();
+    if (typeof window.reloadCrewMembers === "function") window.reloadCrewMembers();
+    if (typeof window.reloadManagedUsers === "function") window.reloadManagedUsers();
+  }
+});
+
+if (typeof auth.authStateReady === "function") {
+  await auth.authStateReady();
+}
+window.bootstrap();
+
+</script>
+
+</body>
+</html>
