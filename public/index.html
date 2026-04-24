@@ -344,45 +344,81 @@
       box-shadow: 0 16px 30px rgba(2,6,23,0.20);
     }
     #eventLaunchPanel{
-      background: linear-gradient(180deg, rgba(23,37,64,0.98), rgba(18,32,55,0.94));
-      border:1px solid rgba(96,165,250,0.34);
+      background: linear-gradient(180deg, rgba(17,28,47,0.98), rgba(14,24,39,0.96));
+      border:1px solid rgba(45,212,191,0.16);
       box-shadow:
-        0 18px 34px rgba(2,6,23,0.24),
-        inset 0 1px 0 rgba(191,219,254,0.08);
-      margin-top:22px;
-      margin-bottom:26px;
+        0 20px 38px rgba(2,6,23,0.26),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+      margin-top:24px;
+      margin-bottom:30px;
     }
     #eventLaunchPanel .sectionTitle{
-      font-size:22px;
+      font-size:24px;
       color:#f8fbff;
     }
     #eventLaunchHelp{
-      color: rgba(219,234,254,0.76);
+      color: rgba(226,232,240,0.76);
       font-size:14px;
+      margin-bottom:16px;
+    }
+    #eventLaunchActions{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:14px;
     }
     #btnStartEvent{
-      background: linear-gradient(180deg, #3b82f6, #2563eb) !important;
-      border-color: rgba(96,165,250,0.85);
-      padding:14px 22px;
-      min-height:54px;
-      box-shadow: 0 14px 30px rgba(37,99,235,0.34);
-      transition: transform .14s ease, filter .2s ease, box-shadow .2s ease;
+      background: linear-gradient(135deg, #0f766e, #0891b2) !important;
+      border:1px solid rgba(34,211,238,.45);
+      color:#ffffff;
+      padding:18px 20px;
+      min-height:96px;
+      box-shadow: 0 18px 34px rgba(8,145,178,0.24);
+      transition: transform .14s ease, filter .2s ease, box-shadow .2s ease, border-color .2s ease;
+      align-items:flex-start;
+      text-align:right;
     }
     #btnStartEvent:hover{
-      transform: scale(1.02);
-      box-shadow: 0 18px 36px rgba(37,99,235,0.40);
+      transform: translateY(-1px);
+      box-shadow: 0 22px 38px rgba(8,145,178,0.30);
+      border-color: rgba(103,232,249,.62);
     }
     #btnStartAdHocEvent{
-      background: transparent !important;
-      border:1px solid rgba(96,165,250,0.28);
-      color: rgba(237,244,255,0.90);
-      padding:13px 20px;
-      min-height:54px;
+      background: rgba(15,23,42,.65) !important;
+      border:1px solid rgba(148,163,184,.35);
+      color: #e2e8f0;
+      padding:18px 20px;
+      min-height:96px;
       box-shadow:none;
+      align-items:flex-start;
+      text-align:right;
     }
     #btnStartAdHocEvent:hover{
-      background: rgba(59,130,246,0.08) !important;
-      border-color: rgba(96,165,250,0.48);
+      background: rgba(30,41,59,.88) !important;
+      border-color: rgba(148,163,184,.55);
+    }
+    .eventLaunchAction{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:8px;
+      width:100%;
+    }
+    .eventLaunchActionTitle{
+      font-size:18px;
+      font-weight:900;
+      line-height:1.4;
+      color:inherit;
+    }
+    .eventLaunchActionDesc{
+      font-size:13px;
+      line-height:1.6;
+      color: rgba(226,232,240,0.84);
+      font-weight:700;
+    }
+    @media (max-width: 860px){
+      #eventLaunchActions{
+        grid-template-columns: 1fr;
+      }
     }
 
     .composer{
@@ -917,10 +953,20 @@
         <div class="sectionHeader">
           <h3 class="sectionTitle">פתיחת אירוע</h3>
         </div>
-        <div class="label" id="eventLaunchHelp" style="margin:0 0 14px;">בחר סוג אירוע להתחלה</div>
-        <div class="miniBar" style="justify-content:flex-start;">
-          <button id="btnStartEvent" style="justify-content:center; min-width:220px; background:var(--btn-primary);">התחל אירוע לפי נוהל זה</button>
-          <button class="secondary" id="btnStartAdHocEvent" style="justify-content:center; min-width:220px;">התחל אירוע ללא נוהל</button>
+        <div class="label" id="eventLaunchHelp" style="margin:0 0 14px;">בחר כיצד לפתוח אירוע עבודה חדש</div>
+        <div id="eventLaunchActions">
+          <button id="btnStartEvent">
+            <span class="eventLaunchAction">
+              <span class="eventLaunchActionTitle">📋 התחל אירוע לפי נוהל זה</span>
+              <span class="eventLaunchActionDesc">פותח אירוע חדש על בסיס הצ'קליסט הנבחר</span>
+            </span>
+          </button>
+          <button class="secondary" id="btnStartAdHocEvent">
+            <span class="eventLaunchAction">
+              <span class="eventLaunchActionTitle">➕ התחל אירוע ללא נוהל</span>
+              <span class="eventLaunchActionDesc">פותח אירוע ריק להוספת סעיפים תוך כדי עבודה</span>
+            </span>
+          </button>
         </div>
       </div>
 
