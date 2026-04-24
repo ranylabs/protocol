@@ -1103,7 +1103,6 @@
   let procedureTempDone = {};
   let crewMembers = [...DEFAULT_CREW];
   let managedUsers = [];
-  let usersDocExists = false;
   window.appState = appState;
   window.saveToCloud = window.saveToCloud || (async function(){});
   window.loadFromCloud = window.loadFromCloud || (async function(){ return null; });
@@ -1112,13 +1111,13 @@
   window.deleteEventFromCloud = window.deleteEventFromCloud || (async function(){});
   window.loadCrewListFromCloud = window.loadCrewListFromCloud || (async function(){ return null; });
   window.saveCrewListToCloud = window.saveCrewListToCloud || (async function(){});
-  window.loadUsersFromCloud = window.loadUsersFromCloud || (async function(){ return { exists:false, users:[] }; });
-  window.saveUsersToCloud = window.saveUsersToCloud || (async function(){});
+  window.loadUsersFromCloud = window.loadUsersFromCloud || (async function(){ return []; });
+  window.upsertUserToCloud = window.upsertUserToCloud || (async function(){});
+  window.deleteUserFromCloud = window.deleteUserFromCloud || (async function(){});
   window.recheckCurrentUserAccess = window.recheckCurrentUserAccess || (async function(){});
   window.isProcedureAdmin = window.isProcedureAdmin === true;
   window.currentUserEmail = window.currentUserEmail || "";
   window.currentUserRole = window.currentUserRole || "";
-  const TEAM_EMAIL = "rcchaifa@gmail.com";
   const TEAM_ORDER_KEY = "jrcc_team_procedure_order_v1";
 
   function normalizeEmail(email){
@@ -1341,11 +1340,9 @@
   async function reloadManagedUsers(){
     try{
       const loaded = await window.loadUsersFromCloud();
-      managedUsers = normalizeManagedUsers(loaded?.users);
-      usersDocExists = loaded?.exists === true;
+      managedUsers = normalizeManagedUsers(loaded);
     }catch(e){
       managedUsers = [];
-      usersDocExists = false;
     }
     renderUsersAdminSection();
   }
@@ -1792,7 +1789,7 @@
     section.style.display = "";
     const rows = normalizeManagedUsers(managedUsers).slice().sort((a, b) => a.email.localeCompare(b.email));
     if(!rows.length){
-      list.innerHTML = `<div class="sub">${usersDocExists ? "אין משתמשים ברשימה" : "אין עדיין רשימת משתמשים. כתובת ${escapeHtml(TEAM_EMAIL)} נשארת fallback רק עד יצירת settings/users."}</div>`;
+      list.innerHTML = `<div class="sub">אין משתמשים ברשימה</div>`;
       return;
     }
     list.innerHTML = `
@@ -1824,7 +1821,7 @@
         managedUsers = managedUsers.filter((entry) => normalizeEmail(entry?.email) !== user.email);
         renderUsersAdminSection();
         try{
-          await window.saveUsersToCloud(managedUsers);
+          await window.deleteUserFromCloud(user.email);
           await window.recheckCurrentUserAccess();
         }catch(e){
           managedUsers = prevUsers;
@@ -2386,7 +2383,7 @@ async function loadFromCloud(){
     managedUsers = normalizeManagedUsers(managedUsers.concat({ email, role }));
     renderUsersAdminSection();
     try{
-      await window.saveUsersToCloud(managedUsers);
+      await window.upsertUserToCloud({ email, role });
       $("#userEmailInput").value = "";
       $("#userRoleSelect").value = "team";
       await window.recheckCurrentUserAccess();
@@ -2665,29 +2662,28 @@ window.saveCrewListToCloud = async function(members){
   await setDoc(doc(db, "settings", "crew"), { members: clean }, { merge: true });
 };
 window.loadUsersFromCloud = async function(){
-  if (!auth.currentUser) return { exists:false, users:[] };
-  const snap = await getDoc(doc(db, "settings", "users"));
-  if(!snap.exists()) return { exists:false, users:[] };
-  const users = snap.data()?.users;
-  return {
-    exists: true,
-    users: Array.isArray(users) ? users : []
-  };
+  if (!auth.currentUser) return [];
+  const snap = await getDocs(collection(db, "appUsers"));
+  return snap.docs.map((d) => {
+    const data = d.data() || {};
+    return {
+      email: normalizeEmail(data.email || d.id),
+      role: String(data.role || "").toLowerCase() === "admin" ? "admin" : "team"
+    };
+  });
 };
-window.saveUsersToCloud = async function(users){
+window.upsertUserToCloud = async function(userData){
   if (!auth.currentUser || !hasAdminAccess(auth.currentUser)) return;
-  const seen = new Set();
-  const clean = (Array.isArray(users) ? users : []).reduce((acc, entry) => {
-    const email = String(entry?.email || "").trim().toLowerCase();
-    if(!email || seen.has(email)) return acc;
-    seen.add(email);
-    acc.push({
-      email,
-      role: String(entry?.role || "").toLowerCase() === "admin" ? "admin" : "team"
-    });
-    return acc;
-  }, []);
-  await setDoc(doc(db, "settings", "users"), { users: clean }, { merge: true });
+  const email = normalizeEmail(userData?.email);
+  if(!email) return;
+  const role = String(userData?.role || "").toLowerCase() === "admin" ? "admin" : "team";
+  await setDoc(doc(db, "appUsers", email), { email, role }, { merge: true });
+};
+window.deleteUserFromCloud = async function(email){
+  if (!auth.currentUser || !hasAdminAccess(auth.currentUser)) return;
+  const normalizedEmail = normalizeEmail(email);
+  if(!normalizedEmail) return;
+  await deleteDoc(doc(db, "appUsers", normalizedEmail));
 };
 
 const provider = new GoogleAuthProvider();
@@ -2711,24 +2707,9 @@ const userRolePill = document.getElementById("userRolePill");
 const ADMIN_EMAILS = new Set([
   "ranyakar@gmail.com"
 ]);
-const TEAM_EMAIL_FALLBACK = "rcchaifa@gmail.com";
 
 function normalizeEmail(email){
   return String(email || "").trim().toLowerCase();
-}
-
-function sanitizeStoredUsers(list){
-  const seen = new Set();
-  return (Array.isArray(list) ? list : []).reduce((acc, entry) => {
-    const email = normalizeEmail(entry?.email);
-    if(!email || seen.has(email)) return acc;
-    seen.add(email);
-    acc.push({
-      email,
-      role: String(entry?.role || "").toLowerCase() === "admin" ? "admin" : "team"
-    });
-    return acc;
-  }, []);
 }
 
 function setAuthGateLoginState(){
@@ -2754,11 +2735,14 @@ async function resolveUserAccess(user){
   const email = normalizeEmail(user?.email);
   if(!email) return { allowed:false, role:"" };
   if(ADMIN_EMAILS.has(email)) return { allowed:true, role:"admin" };
-  const usersData = await window.loadUsersFromCloud();
-  const users = sanitizeStoredUsers(usersData?.users);
-  const found = users.find(entry => entry.email === email);
-  if(found) return { allowed:true, role: found.role };
-  if(usersData?.exists !== true && email === TEAM_EMAIL_FALLBACK) return { allowed:true, role:"team" };
+  const snap = await getDoc(doc(db, "appUsers", email));
+  if(snap.exists()){
+    const data = snap.data() || {};
+    return {
+      allowed: true,
+      role: String(data.role || "").toLowerCase() === "admin" ? "admin" : "team"
+    };
+  }
   return { allowed:false, role:"" };
 }
 
